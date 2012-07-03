@@ -47,7 +47,7 @@ class Game : public Application
     void ToggleFullscreen();
 
   protected:
-    GameStatusCode _game_status;
+    GameStatusCode game_status_;
 
 };
 

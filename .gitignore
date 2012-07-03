@@ -10,3 +10,7 @@
 *.lai
 *.la
 *.a
+
+# MacOSX project files ignore
+*.xcodeproj
+.DS_Store

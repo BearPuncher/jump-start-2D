@@ -31,13 +31,13 @@ class Application
     virtual bool IsRunning() = 0;
 
   protected:
-    int _screen_width;
-    int _screen_height;
-    int _bits_per_pixel;
-    bool _full_screen;
-    std::string _window_name;
-    SDL_Surface* _sdl_surface;
-    Uint32 _sdl_flags;
+    int screen_width_;
+    int screen_height_;
+    int bits_per_pixel_;
+    bool full_screen_;
+    std::string window_name_;
+    SDL_Surface* sdl_surface_;
+    Uint32 sdl_flags_;
 
 };
 

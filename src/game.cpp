@@ -7,33 +7,33 @@ using namespace geometry;
 
 Game::Game()
 {
-  _screen_width = 640;
-  _screen_height = 480;
-  _bits_per_pixel = 32;
+  screen_width_ = 640;
+  screen_height_ = 480;
+  bits_per_pixel_ = 32;
 
-  _window_name = "";
+  window_name_ = "";
 
-  _sdl_surface = NULL;
-  _sdl_flags = 0;
+  sdl_surface_ = NULL;
+  sdl_flags_ = 0;
 
-  _full_screen = false;
+  full_screen_ = false;
 
-  _game_status = Game::GAME_RUNNING;
+  game_status_ = Game::GAME_RUNNING;
 
 }
 
 Game::~Game()
 {
-  delete _sdl_surface;
+  delete sdl_surface_;
 }
 
 bool Game::Init()
 {
   fprintf(stderr, "SDL initializing.\n");
 
-  _sdl_flags = SDL_OPENGL | SDL_ANYFORMAT;
+  sdl_flags_ = SDL_OPENGL | SDL_ANYFORMAT;
 
-  if (_full_screen) _sdl_flags |= SDL_FULLSCREEN;
+  if (full_screen_) sdl_flags_ |= SDL_FULLSCREEN;
 
 	atexit(SDL_Quit);
 
@@ -53,28 +53,28 @@ bool Game::Init()
   }
 
   if (info->hw_available) {
-    _sdl_flags |= SDL_HWSURFACE;
+    sdl_flags_ |= SDL_HWSURFACE;
   } else {
-    _sdl_flags |= SDL_SWSURFACE;
+    sdl_flags_ |= SDL_SWSURFACE;
   }
 
-  _bits_per_pixel = info->vfmt->BitsPerPixel;
+  bits_per_pixel_ = info->vfmt->BitsPerPixel;
 
-  SDL_WM_SetCaption(_window_name.c_str(), NULL);
+  SDL_WM_SetCaption(window_name_.c_str(), NULL);
 
-  _sdl_surface = SDL_SetVideoMode(_screen_width, _screen_height,
-                                 _bits_per_pixel, _sdl_flags);
+  sdl_surface_ = SDL_SetVideoMode(screen_width_, screen_height_,
+                                 bits_per_pixel_, sdl_flags_);
 
-  if ( _sdl_surface == NULL ) {
+  if ( sdl_surface_ == NULL ) {
     fprintf(stderr, "Couldn't set %dx %dx%d video mode: %s\n",
-            _screen_width, _screen_height, _bits_per_pixel,
+            screen_width_, screen_height_, bits_per_pixel_,
             SDL_GetError());
     return false;
   }
 
   fprintf(stderr, "Set %dx%d at %d bits-per-pixel mode\n",
-          _screen_width, _screen_height,
-          _sdl_surface->format->BitsPerPixel);
+          screen_width_, screen_height_,
+          sdl_surface_->format->BitsPerPixel);
 
   fprintf(stderr, "SDL initialized.\n");
 
@@ -86,13 +86,13 @@ bool Game::Init()
   glClearDepth(1.0f);
 
   //Set viewport
-  glViewport(0, 0, _screen_width, _screen_height);
+  glViewport(0, 0, screen_width_, screen_height_);
 
   //multiply the current matrix with an orthographic matrix
   //Near value 1, far value -1
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(0, _screen_width, _screen_height, 0, 1, -1);
+  glOrtho(0, screen_width_, screen_height_, 0, 1, -1);
   glMatrixMode(GL_MODELVIEW);
 
   glEnable(GL_TEXTURE_2D);
@@ -104,7 +104,7 @@ bool Game::Init()
 
 void Game::Run()
 {
-  glClearColor(1,1,1,0);
+  glClearColor(1,0,1,0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
@@ -126,7 +126,7 @@ void Game::Run()
   SDL_GL_SwapBuffers();
 
   if ( input.KeyPressed(SDLK_ESCAPE) || input.WindowClosed() )
-    _game_status = Game::GAME_OVER;
+    game_status_ = Game::GAME_OVER;
 }
 
 void Game::Shutdown()
@@ -137,31 +137,31 @@ void Game::Shutdown()
 
 bool Game::IsRunning()
 {
-  return (_game_status == Game::GAME_RUNNING);
+  return (game_status_ == Game::GAME_RUNNING);
 }
 
 //Set window name to string "name"
 void Game::SetWindowName(string name)
 {
-  _window_name = name;
-  SDL_WM_SetCaption(_window_name.c_str(), NULL);
+  window_name_ = name;
+  SDL_WM_SetCaption(window_name_.c_str(), NULL);
 }
 
 //
 void Game::ResizeWindow(int width, int height)
 {
-  _screen_width = width;
-  _screen_height = height;
+  screen_width_ = width;
+  screen_height_ = height;
 
-	_sdl_surface = SDL_SetVideoMode(_screen_width, _screen_height,
-                                 _bits_per_pixel, _sdl_flags);
+	sdl_surface_ = SDL_SetVideoMode(screen_width_, screen_height_,
+                                 bits_per_pixel_, sdl_flags_);
 
-  glViewport(0, 0, _screen_width, _screen_height);
+  glViewport(0, 0, screen_width_, screen_height_);
 
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(0, _screen_width, _screen_height, 0, 1, -1);
+  glOrtho(0, screen_width_, screen_height_, 0, 1, -1);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -170,11 +170,11 @@ void Game::ResizeWindow(int width, int height)
 //Easily toggle between full screen
 void Game::ToggleFullscreen()
 {
-	_full_screen = !_full_screen;
+	full_screen_ = !full_screen_;
 
-	SDL_WM_ToggleFullScreen(_sdl_surface);
+	SDL_WM_ToggleFullScreen(sdl_surface_);
 
-	if (!_full_screen)
+	if (!full_screen_)
 	{
 		SDL_ShowCursor(SDL_ENABLE);
 	}

@@ -10,7 +10,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 
-#include <Box2D/Box2D.h>
+//#include <Box2D/Box2D.h>
 
 #include "geometry.h"
 #include "input.h"

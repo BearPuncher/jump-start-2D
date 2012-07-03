@@ -3,42 +3,42 @@
 
 Graphic::Graphic()
 {
-    _active = false;
-    _relative = true;
-    _scroll_x = 1;
-    _scroll_y = 1;
-    _visible = true;
-    _offset_x = 0;
-    _offset_y = 0;
-    _scale_x = 1;
-    _scale_y = 1;
+    active_ = false;
+    relative_ = true;
+    scroll_x_ = 1;
+    scroll_y_ = 1;
+    visible_ = true;
+    offset_x_ = 0;
+    offset_y_ = 0;
+    scale_x_ = 1;
+    scale_y_ = 1;
 }
 
 Graphic::~Graphic()
 {
-    SDL_FreeSurface(_image_surface);
+    SDL_FreeSurface(image_surface_);
 }
 
 void Graphic::Render(Point p)
 {
     //If not visible, dont render
-    if (!_visible) return;
+    if (!visible_) return;
 
-    double x = p.x + _offset_x;
-    double y = p.y + _offset_y;
+    double x = p.x + offset_x_;
+    double y = p.y + offset_y_;
 
-    double w = _image_surface->w * _scale_x;
-    double h = _image_surface->h * _scale_y;
+    double w = image_surface_->w * scale_x_;
+    double h = image_surface_->h * scale_y_;
 
     GLuint texture;  // This is a handle to our texture object
     GLenum texture_format;
     GLint  nOfColors;
 
     // get the number of channels in the SDL surface
-    nOfColors = _image_surface->format->BytesPerPixel;
+    nOfColors = image_surface_->format->BytesPerPixel;
     if (nOfColors == 4) // contains an alpha channel
     {
-        if (_image_surface->format->Rmask == 0x000000ff)
+        if (image_surface_->format->Rmask == 0x000000ff)
         {
             texture_format = GL_RGBA;
         }
@@ -50,7 +50,7 @@ void Graphic::Render(Point p)
     }
     else if (nOfColors == 3)   // no alpha channel
     {
-        if (_image_surface->format->Rmask == 0x000000ff)
+        if (image_surface_->format->Rmask == 0x000000ff)
         {
             texture_format = GL_RGB;
         }
@@ -69,16 +69,18 @@ void Graphic::Render(Point p)
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
     // Edit the texture object's image data using the information SDL_Surface gives us
-    glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, _image_surface->w,
-                  _image_surface->h, 0, texture_format,
-                  GL_UNSIGNED_BYTE, _image_surface->pixels );
+    glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, image_surface_->w,
+                  image_surface_->h, 0, texture_format,
+                  GL_UNSIGNED_INT_8_8_8_8, image_surface_->pixels);
+                 //GL_UNSIGNED_BYTE, image_surface_->pixels );
 
     if (nOfColors == 4)
     {
       glEnable(GL_BLEND);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
-
+    //Needs to be called before mapping a texture
+    glEnable(GL_TEXTURE_2D);
     // Bind the texture to which subsequent calls refer to
     glBindTexture( GL_TEXTURE_2D, texture );
 
@@ -132,5 +134,5 @@ void Graphic::LoadImage( const char * filename)
     surface_return = SDL_DisplayFormatAlpha(surface_temp);
     SDL_FreeSurface(surface_temp);
 
-    _image_surface = surface_return;
+    image_surface_ = surface_return;
 }
