@@ -32,11 +32,11 @@ void Graphic::Render(Point p)
 
     GLuint texture;  // This is a handle to our texture object
     GLenum texture_format;
-    GLint  nOfColors;
+    GLint  number_of_pixels;
 
     // get the number of channels in the SDL surface
-    nOfColors = image_surface_->format->BytesPerPixel;
-    if (nOfColors == 4) // contains an alpha channel
+    number_of_pixels = image_surface_->format->BytesPerPixel;
+    if (number_of_pixels == 4) // contains an alpha channel
     {
         if (image_surface_->format->Rmask == 0x000000ff)
         {
@@ -48,7 +48,7 @@ void Graphic::Render(Point p)
         }
 
     }
-    else if (nOfColors == 3)   // no alpha channel
+    else if (number_of_pixels == 3)   // no alpha channel
     {
         if (image_surface_->format->Rmask == 0x000000ff)
         {
@@ -58,6 +58,9 @@ void Graphic::Render(Point p)
         {
             texture_format = GL_BGR;
         }
+    } else {
+      fprintf(stderr, "error: Bytes Per Pixel not a valid number - %d.", number_of_pixels);
+      exit(-1);
     }
     glGenTextures( 1, &texture );
 
@@ -69,12 +72,12 @@ void Graphic::Render(Point p)
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 
     // Edit the texture object's image data using the information SDL_Surface gives us
-    glTexImage2D( GL_TEXTURE_2D, 0, nOfColors, image_surface_->w,
+    glTexImage2D( GL_TEXTURE_2D, 0, number_of_pixels, image_surface_->w,
                   image_surface_->h, 0, texture_format,
                   GL_UNSIGNED_INT_8_8_8_8, image_surface_->pixels);
                  //GL_UNSIGNED_BYTE, image_surface_->pixels );
 
-    if (nOfColors == 4)
+    if (number_of_pixels == 4)
     {
       glEnable(GL_BLEND);
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -98,7 +101,7 @@ void Graphic::Render(Point p)
       glTexCoord2i( 0, 1 ); glVertex3f( x, y+h, 0.f );
     glEnd();
 
-    if (nOfColors == 4)
+    if (number_of_pixels == 4)
     {
       glDisable(GL_BLEND);
     }

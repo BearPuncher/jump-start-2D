@@ -37,7 +37,7 @@ public:
   Game();
   Game(int screen_width, int screen_height, 
        std::string window_name = "", bool full_screen = false);
-  ~Game();
+  
   void Run();
   bool IsRunning();
   

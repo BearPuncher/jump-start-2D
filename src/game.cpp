@@ -17,14 +17,10 @@ Application(screen_width, screen_height, window_name, full_screen)
   game_status_ = Game::GAME_RUNNING;
 }
 
-Game::~Game()
-{
-  delete sdl_surface_;
-}
 
 void Game::Run()
 {
-  glClearColor(1,0,1,0);
+  glClearColor(1,1,1,0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
@@ -40,7 +36,7 @@ void Game::Run()
   
   Graphic myGraphic;
   myGraphic.LoadImage("./assets/heart.png");
-  myGraphic.Render(Point(80,50));
+  myGraphic.Render(input.GetMousePosition());
   
 
   SDL_GL_SwapBuffers();

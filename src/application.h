@@ -25,7 +25,7 @@ public:
   Application();
   Application(int screen_width, int screen_height,
               std::string window_name = "", bool full_screen = false);
-  ~Application();
+  virtual ~Application();
   
   virtual bool Init();
   
