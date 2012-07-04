@@ -15,10 +15,8 @@ int main(int argc, char *argv[])
   fprintf(stderr, "Initializing SDL.\n");
 
   /* Initialise game */
-  Game game;
+  Game game(800, 640, "My Game", false);
   game.Init();
-  game.SetWindowName("My Application");
-  game.ResizeWindow(800, 640);
 
   /* Start game loop */
   while(game.IsRunning())

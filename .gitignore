@@ -14,3 +14,6 @@
 # MacOSX project files ignore
 *.xcodeproj
 .DS_Store
+src/assets/heart.png
+
+src/assets/mandrill.bmp
