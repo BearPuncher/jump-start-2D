@@ -26,8 +26,7 @@
  
  */
 
-class Game : public Application
-{
+class Game : public Application {
 public:
   enum GameStatusCode {
     GAME_RUNNING = 0,

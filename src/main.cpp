@@ -7,8 +7,7 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   //B2_NOT_USED(argc);
 	//B2_NOT_USED(argv);
 
@@ -19,8 +18,7 @@ int main(int argc, char *argv[])
   game.Init();
 
   /* Start game loop */
-  while(game.IsRunning())
-  {
+  while(game.IsRunning()) {
     //Read input on new step
     input.ReadInput();
     game.Run();

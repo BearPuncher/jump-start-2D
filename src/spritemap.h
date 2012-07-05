@@ -7,8 +7,7 @@
 #include <string>
 #include <map>
 
-class Spritemap : public Graphic
-{
+class Spritemap : public Graphic {
 public:
   Spritemap();
   virtual ~Spritemap();
@@ -25,8 +24,7 @@ public:
   
 protected:
   //Struct definition for animation
-  struct Animation
-	{
+  struct Animation {
     //Name of the animation
     std::string name;
     //Pointer to an array of frames in the animation;
@@ -49,8 +47,7 @@ protected:
     name(_name), //Name of animation
     frames(NULL), //Frame
     frame_rate(_frame_rate),
-    loop(_loop)
-    {
+    loop(_loop) {
       size_t size_of_array = (sizeof _frames)/(sizeof _frames[0]);
       frames = new int[size_of_array];
       for(int i = size_of_array; i < size_of_array; i++)

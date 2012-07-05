@@ -5,8 +5,7 @@
 #include <cmath>
 #include <vector>
 
-namespace geometry
-{
+namespace geometry {
 
   //Definition of PI
 	const double PI = 3.14159265;

@@ -6,8 +6,7 @@ using namespace std;
 using namespace geometry;
 
 //Default Constructor
-Application::Application()
-{
+Application::Application() {
   screen_width_ = 640;
   screen_height_ = 480;
   bits_per_pixel_ = 32;
@@ -21,8 +20,7 @@ Application::Application()
 }
 
 Application::Application(int screen_width, int screen_height, 
-                         std::string window_name, bool full_screen) 
-{
+                         std::string window_name, bool full_screen) {
   screen_width_ = screen_width;
   screen_height_ = screen_height;
   
@@ -36,8 +34,7 @@ Application::Application(int screen_width, int screen_height,
   full_screen_ = full_screen;
 }
 
-Application::~Application()
-{
+Application::~Application() {
   delete sdl_surface_;
 }
 
@@ -115,15 +112,13 @@ bool Application::Init() {
   return true;
 };
 
-void Application::SetWindowName(std::string name)
-{
+void Application::SetWindowName(std::string name) {
   window_name_ = name;
   SDL_WM_SetCaption(window_name_.c_str(), NULL);
 };
 
 //Simple Resize function
-void Application::ResizeWindow(int width, int height)
-{
+void Application::ResizeWindow(int width, int height) {
   screen_width_ = width;
   screen_height_ = height;
   
@@ -142,8 +137,7 @@ void Application::ResizeWindow(int width, int height)
 };
 
 //Easily toggle between full screen
-void Application::ToggleFullscreen()
-{
+void Application::ToggleFullscreen() {
   full_screen_ = !full_screen_;
   
   SDL_WM_ToggleFullScreen(sdl_surface_);

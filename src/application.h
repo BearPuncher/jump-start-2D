@@ -19,8 +19,7 @@
  
  */
 
-class Application
-{
+class Application {
 public:
   Application();
   Application(int screen_width, int screen_height,

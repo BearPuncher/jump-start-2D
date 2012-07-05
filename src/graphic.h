@@ -6,8 +6,7 @@
 
 using namespace geometry;
 
-class Graphic
-{
+class Graphic {
 public:
   Graphic();
   virtual ~Graphic();

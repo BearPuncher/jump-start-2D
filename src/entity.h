@@ -3,8 +3,7 @@
 
 #include "spritemap.h"
 
-class Entity
-{
+class Entity {
   public:
     Entity() {};
     virtual ~Entity() {};

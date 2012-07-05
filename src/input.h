@@ -4,8 +4,7 @@
 #include "globals.h"
 using namespace geometry;
 
-class Input
-{
+class Input {
 public:
   Input();
   ~Input();
@@ -43,7 +42,6 @@ private:
   
   int mouse_x_;
   int mouse_y_;
-  
   
 };
 
