@@ -1,5 +1,5 @@
 #include "jumpstartcontroller.h"
-/*
+
 JumpStartController JS;
 
 JumpStartController::JumpStartController() {
@@ -29,4 +29,4 @@ void JumpStartController::SetCameraRotation(float degrees) {
 void JumpStartController::RenderCamera() {
   glRotatef(camera.rotation, 0.0f, 0.0, 1.0f);
   glTranslatef(camera.position.x, camera.position.y, 0);
-}*/
+}

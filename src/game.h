@@ -2,46 +2,55 @@
 #define GAME_H
 
 #include "globals.h"
-#include "application.h"
-
 
 /*
  Game
  
- Game is an implementation of Application
- Game game;
+ Abstract class specifying the functioning of an SDL Game
  
- Init() - function for initialising any code for the game
- if (!game.Init()) exit(); //Application failed to initialise
+ Init() - function for initialising any code for the Game
  
- IsRunning() - Boolean function to return true if game is running
- Run() - Game loop, contains code to be run every game step
- while (game.IsRunning()) {
- game.Run(); //Does something
- }
+ IsRunning() - Boolean function to return true if Game is running
  
- Shutdown() - Function for cleaning upon closing the game
- game.Shutdown();
- exit();
+ Run() - Game loop, contains code to be run every Game step
+ 
+ Shutdown() - Function for cleaning upon closing the Game
  
  */
 
-class Game : public Application {
+class Game {
 public:
-  enum GameStatusCode {
-    GAME_RUNNING = 0,
-    GAME_OVER
+  Game();
+  Game(int screen_width, int screen_height,
+              std::string window_name = "", bool full_screen = false);
+  virtual ~Game();
+  
+  virtual bool Init();
+  
+  virtual void Run() = 0;
+  virtual void Shutdown() {
+      fprintf(stderr, "Quiting SDL.\n");
+      SDL_Quit();
+
   };
   
-  Game();
-  Game(int screen_width, int screen_height, 
-       std::string window_name = "", bool full_screen = false);
+  virtual bool IsRunning() = 0;
   
-  void Run();
-  bool IsRunning();
+  //Set window name to string "name"
+  void SetWindowName(std::string name);
+  //
+  void ResizeWindow(int width, int height);
+  //Easily toggle between full screen
+  void ToggleFullscreen();
   
 protected:
-  GameStatusCode game_status_;
+  int screen_width_;
+  int screen_height_;
+  int bits_per_pixel_;
+  bool full_screen_;
+  std::string window_name_;
+  SDL_Surface* sdl_surface_;
+  Uint32 sdl_flags_;
   
 };
 

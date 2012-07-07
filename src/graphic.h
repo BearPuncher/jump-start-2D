@@ -27,7 +27,7 @@ public:
   
   inline void SetScroll(double scroll_x, double scroll_y) {
     scroll_x_ = scroll_x;
-    scroll_x_ = scroll_y;
+    scroll_y_ = scroll_y;
   };
   
   inline void Hide() {

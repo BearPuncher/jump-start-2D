@@ -1,9 +1,8 @@
 #include <iostream>
 #include <stdio.h>
-#include "SDL.h"
 
 #include "globals.h"
-#include "game.h"
+#include "game_test.h"
 
 using namespace std;
 
@@ -12,7 +11,7 @@ int main(int argc, char *argv[]) {
 	//B2_NOT_USED(argv);
 
   /* Initialise game */
-  Game game(800, 640, "My Game", false);
+  GameTest game(800, 640, "My Game", false);
   game.Init();
 
   /* Start game loop */

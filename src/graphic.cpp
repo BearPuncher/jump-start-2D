@@ -4,13 +4,13 @@
 Graphic::Graphic() {
   active_ = false;
   relative_ = true;
-  scroll_x_ = 1;
-  scroll_y_ = 1;
   visible_ = true;
   offset_x_ = 0;
   offset_y_ = 0;
   scale_x_ = 1;
   scale_y_ = 1;
+  scroll_x_ = 1;
+  scroll_y_ = 1;
 }
 
 Graphic::~Graphic() {
@@ -51,6 +51,11 @@ void Graphic::Render(Point p) {
     fprintf(stderr, "error: Bytes Per Pixel not a valid number - %d.", number_of_pixels);
     exit(-1);
   }
+  glPushMatrix();
+  
+  glTranslatef(-JS.GetCameraPoint().x * (1.0f - scroll_x_),
+               -JS.GetCameraPoint().y * (1.0f - scroll_y_), 0);
+  
   glGenTextures( 1, &texture );
   
   // Bind the texture object
@@ -88,6 +93,8 @@ void Graphic::Render(Point p) {
   //Top-left vertex (corner)
   glTexCoord2i( 0, 1 ); glVertex3f( x, y+h, 0.f );
   glEnd();
+  
+  glPopMatrix();
   
   if (number_of_pixels == 4) {
     glDisable(GL_BLEND);
