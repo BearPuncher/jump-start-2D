@@ -21,6 +21,12 @@ void Game::Run() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
+  glPushMatrix();
+  //Camera position
+  //JS.SetCameraPosition(Point(80,80));
+  //JS.SetCameraRotation(30.0f);
+  JS.RenderCamera();
+  
   /*
   glBegin(GL_QUADS);
     glColor3f(1, 0, 0); glVertex3f(0, 0, 0);
@@ -31,11 +37,17 @@ void Game::Run() {
   */
 
   
+  //Render code
+  glPushMatrix();
+  
   Graphic myGraphic;
   myGraphic.LoadImage("./assets/heart.png");
-  myGraphic.Render(input.GetMousePosition());
+  myGraphic.SetOffset(-80, -70);
+  myGraphic.Render(Point(0,0));
+  glPopMatrix();
   
-
+  glPopMatrix();
+  
   SDL_GL_SwapBuffers();
 
   if (input.KeyPressed(SDLK_ESCAPE) || input.WindowClosed()) {

@@ -15,20 +15,26 @@ public:
   virtual void Update(double dt);
   
   //Setters
-  inline void SetOffset(double offset_x, double offset_y)
-  {
-    offset_x_ = offset_x; offset_y_ = offset_y;
+  inline void SetOffset(double offset_x, double offset_y) {
+    offset_x_ = offset_x;
+    offset_y_ = offset_y;
   };
-  inline void SetScale(double scale_x, double scale_y)
-  {
-    scale_x_ = scale_x; scale_y_ = scale_y;
-  }
-  inline void Hide()
-  {
+  
+  inline void SetScale(double scale_x, double scale_y) {
+    scale_x_ = scale_x;
+    scale_y_ = scale_y;
+  };
+  
+  inline void SetScroll(double scroll_x, double scroll_y) {
+    scroll_x_ = scroll_x;
+    scroll_x_ = scroll_y;
+  };
+  
+  inline void Hide() {
     visible_ = false;
   };
-  inline void Show()
-  {
+  
+  inline void Show() {
     visible_ = true;
   };
   

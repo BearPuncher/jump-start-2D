@@ -14,7 +14,6 @@
 
 #include "geometry.h"
 #include "input.h"
-
-
+#include "jumpstartcontroller.h"
 
 #endif // GLOBALS_H

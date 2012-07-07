@@ -16,11 +16,7 @@ public:
   void Render(Point p);
   void Update(double dt);
   
-  void add(std::string name, int* frames, float frame_rate = 0, bool loop = true)
-  {
-    //animation_map_[name] = Animation(name, frames, frame_rate, loop);
-  };
-  
+  void add(std::string name, int* frames, float frame_rate = 0, bool loop = true);
   
 protected:
   //Struct definition for animation
@@ -50,8 +46,7 @@ protected:
     loop(_loop) {
       size_t size_of_array = (sizeof _frames)/(sizeof _frames[0]);
       frames = new int[size_of_array];
-      for(int i = size_of_array; i < size_of_array; i++)
-      {
+      for(int i = size_of_array; i < size_of_array; i++) {
         frames[i] = _frames[i];
       }
       
@@ -64,11 +59,11 @@ protected:
   int frame_height_;
   
   //Map of all animations from a string to a list
-  //std::map<std::string,Animation> animation_map_;
+  std::map< std::string, Animation* > animation_map_;
   std::string current_animation_;
   
   
-  private:
+private:
 };
 
 

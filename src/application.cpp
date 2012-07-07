@@ -142,12 +142,9 @@ void Application::ToggleFullscreen() {
   
   SDL_WM_ToggleFullScreen(sdl_surface_);
   
-  if (!full_screen_)
-  {
+  if (!full_screen_) {
     SDL_ShowCursor(SDL_ENABLE);
-  }
-  else
-  {
+  } else {
     SDL_ShowCursor(SDL_DISABLE);
   }
 };

@@ -11,8 +11,6 @@ int main(int argc, char *argv[]) {
   //B2_NOT_USED(argc);
 	//B2_NOT_USED(argv);
 
-  fprintf(stderr, "Initializing SDL.\n");
-
   /* Initialise game */
   Game game(800, 640, "My Game", false);
   game.Init();
