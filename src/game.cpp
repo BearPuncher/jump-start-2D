@@ -124,7 +124,6 @@ void Game::Run() {
   
   //Render code
   glPushMatrix();
- 
   
   Image myGraphic;
   myGraphic.LoadImage("./assets/heart.png");
