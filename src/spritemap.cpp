@@ -3,7 +3,7 @@
 
 #include "spritemap.h"
 
-Spritemap::Spritemap():Graphic(){
+Spritemap::Spritemap():Image(){
 
 }
 
@@ -12,11 +12,11 @@ Spritemap::~Spritemap() {
 }
 
 void Spritemap::Render(Point p) {
-  Graphic::Render(p);
+  Image::Render(p);
 }
 
 void Spritemap::Update(double dt) {
-  Graphic::Update(dt);
+  Image::Update(dt);
 }
 
 void Spritemap::add(std::string name, int* frames, float frame_rate, bool loop) {

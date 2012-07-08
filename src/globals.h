@@ -15,4 +15,11 @@
 #include "input.h"
 #include "jumpstartcontroller.h"
 
+#define HEX3_TO_FLOAT(x) (float)(((x&0xff0000)>>16)/255.0f),(float)(((x&0x00ff00)>>8)/255.0f),(float)((x&0x0000ff)/255.0f)
+
+#define HEX3_R_VAL(x) (float)(((x&0xff0000)>>16)/255.0f)
+#define HEX3_G_VAL(x) (float)(((x&0x00ff00)>>8)/255.0f)
+#define HEX3_B_VAL(x) (float)((x&0x0000ff)/255.0f)
+
+
 #endif // GLOBALS_H

@@ -7,9 +7,60 @@
 #include <string>
 #include <map>
 
+using namespace geometry;
+
 class Image : public Graphic {
 public:
+  Image();
+  virtual ~Image();
+  
+  virtual void Render(Point p);
+  virtual void Update(double dt);
+  
+  inline void SetAlpha(float alpha) {
+    alpha_ = alpha;
+  };
+  
+  inline float GetAlpha() {
+    return alpha_;
+  };
+  
+  inline void SetClippingRectangle(Point p, int w, int h) {
+    clip_rect_.p = p;
+    clip_rect_.w = w;
+    clip_rect_.h = h;
+  };
+  
+  inline void SetColour(Uint32 colour) {
+    colour_ = colour;
+  };
+
+  inline Uint32 GetColour() {
+    return colour_;
+  };
+  
+  inline void SetFlipped(bool flipped) {
+    flipped_ = flipped;
+  };
+  
+  inline bool GetFlipped() {
+    return flipped_;
+  };
+  
 protected:
+  float alpha_; // value 0 to 1
+  float angle_; //0
+  
+  //blend mode
+  struct {
+    Point p;
+    int w;
+    int h;
+  } clip_rect_;
+  
+  Uint32 colour_; //0xFFFFFF for no tint
+  bool flipped_;
+  
 private:
 };
 
@@ -18,18 +69,6 @@ private:
 
 /*
  
- _alpha	property
- protected var _alpha:Number = 1
- alpha	property	 
- alpha:Number  [read-write]
- Change the opacity of the Image, a value from 0 to 1.
- 
- Implementation 
- public function get alpha():Number 
- public function set alpha(value:Number):void 
- angle	property	 
- public var angle:Number = 0
- Rotation of the image, in degrees.
  
  blend	property	 
  public var blend:String
@@ -37,21 +76,8 @@ private:
  
  _class	property	 
  protected var _class:String
- clipRect	property	 
- clipRect:Rectangle  [read-only]
- Clipping rectangle for the image.
  
- Implementation 
- public function get clipRect():Rectangle 
- _color	property	 
- protected var _color:uint = 0x00FFFFFF
- color	property	 
- color:uint  [read-write]
- The tinted color of the Image. Use 0xFFFFFF to draw the Image normally with the default blending mode.
- 
- Implementation 
- public function get color():uint 
- public function set color(value:uint):void 
+
  _colorTransform	property	 
  protected var _colorTransform:ColorTransform
  _drawMask	property	 
@@ -63,6 +89,9 @@ private:
  Implementation 
  public function get drawMask():BitmapData 
  public function set drawMask(value:BitmapData):void 
+ 
+ 
+ 
  _flip	property	 
  protected var _flip:BitmapData
  _flipped	property	 

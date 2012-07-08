@@ -11,8 +11,8 @@ public:
   Graphic();
   virtual ~Graphic();
   
-  virtual void Render(Point p);
-  virtual void Update(double dt);
+  virtual void Render(Point p) = 0;
+  virtual void Update(double dt) = 0;
   
   //Setters
   inline void SetOffset(double offset_x, double offset_y) {
@@ -53,6 +53,8 @@ protected:
   double scale_y_;
   
   SDL_Surface* image_surface_; 	// This surface will tell us the details of the image
+  
+  
 private:
 };
 

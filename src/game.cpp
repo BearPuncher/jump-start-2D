@@ -112,6 +112,46 @@ bool Game::Init() {
   return true;
 };
 
+
+void Game::Run() {
+  glClearColor(1,1,1,0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity();
+  
+  glPushMatrix();
+  //Camera position
+  JS.RenderCamera();
+  
+  //Render code
+  glPushMatrix();
+ 
+  
+  Image myGraphic;
+  myGraphic.LoadImage("./assets/heart.png");
+  myGraphic.SetOffset(-80, -70);
+  myGraphic.SetScroll(0.5f, 0.5f);
+  
+  myGraphic.Render(Point(600,100));
+  
+  Image myGraphic1;
+  myGraphic1.LoadImage("./assets/heart.png");
+  myGraphic1.SetOffset(-80, -70);
+  myGraphic1.SetFlipped(true);
+  myGraphic1.SetScroll(1.0f, 1.0f);
+  
+  myGraphic1.Render(Point(600,300));
+  
+  glPopMatrix();
+  
+  glPopMatrix();
+  
+  SDL_GL_SwapBuffers();
+  
+  if (input.KeyPressed(SDLK_ESCAPE) || input.WindowClosed()) {
+    game_status_ = Game::GAME_OVER;
+  }
+}
+
 void Game::SetWindowName(std::string name) {
   window_name_ = name;
   SDL_WM_SetCaption(window_name_.c_str(), NULL);

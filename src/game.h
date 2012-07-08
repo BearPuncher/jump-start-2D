@@ -20,6 +20,12 @@
 
 class Game {
 public:
+  enum GameStatusCode {
+    GAME_RUNNING = 0,
+    GAME_OVER
+  };
+  
+  
   Game();
   Game(int screen_width, int screen_height,
               std::string window_name = "", bool full_screen = false);
@@ -27,14 +33,11 @@ public:
   
   virtual bool Init();
   
-  virtual void Run() = 0;
+  virtual void Run();
   virtual void Shutdown() {
       fprintf(stderr, "Quiting SDL.\n");
       SDL_Quit();
-
   };
-  
-  virtual bool IsRunning() = 0;
   
   //Set window name to string "name"
   void SetWindowName(std::string name);
@@ -42,6 +45,10 @@ public:
   void ResizeWindow(int width, int height);
   //Easily toggle between full screen
   void ToggleFullscreen();
+  
+  virtual inline bool IsRunning() {
+    return (game_status_ == GAME_RUNNING);
+  };
   
 protected:
   int screen_width_;
@@ -51,6 +58,8 @@ protected:
   std::string window_name_;
   SDL_Surface* sdl_surface_;
   Uint32 sdl_flags_;
+  
+  GameStatusCode game_status_;
   
 };
 

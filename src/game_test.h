@@ -28,20 +28,14 @@
 
 class GameTest : public Game {
 public:
-  enum GameStatusCode {
-    GAME_RUNNING = 0,
-    GAME_OVER
-  };
-  
+
   GameTest();
   GameTest(int screen_width, int screen_height, 
        std::string window_name = "", bool full_screen = false);
-  
-  void Run();
-  bool IsRunning();
+
   
 protected:
-  GameStatusCode game_status_;
+  
   
 };
 

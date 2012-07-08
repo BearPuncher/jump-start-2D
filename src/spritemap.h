@@ -2,12 +2,12 @@
 #define SPRITEMAP_H
 
 #include "globals.h"
-#include "graphic.h"
+#include "image.h"
 
 #include <string>
 #include <map>
 
-class Spritemap : public Graphic {
+class Spritemap : public Image {
 public:
   Spritemap();
   virtual ~Spritemap();

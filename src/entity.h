@@ -12,7 +12,7 @@ class Entity {
     virtual void Render() {};//= 0;
 
   protected:
-    Graphic sprite_;
+    Image sprite_;
   private:
 };
 
