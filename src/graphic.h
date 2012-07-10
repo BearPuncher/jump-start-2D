@@ -20,8 +20,11 @@ public:
     offset_y_ = offset_y;
   };
   
-  inline void SetScale(double scale_x, double scale_y) {
+  inline void SetScaleX(double scale_x) {
     scale_x_ = scale_x;
+  };
+  
+  inline void SetScaleY(double scale_y) {
     scale_y_ = scale_y;
   };
   

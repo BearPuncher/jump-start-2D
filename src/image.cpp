@@ -4,10 +4,15 @@ Image::Image():Graphic() {
   alpha_ = 1; // value 0 to 1
   angle_ = 0;
   
+  scale_ = 1;
+  
   //clip_rect_;
 
   colour_ = 0xffffff;
   flipped_ = false;
+  
+  origin_x_ = 0;
+  origin_y_ = 0;
 }
 
 Image::~Image() {
@@ -20,11 +25,11 @@ void Image::Render(Point p) {
     return;
   }
   
-  double x = p.x + offset_x_;
-  double y = p.y + offset_y_;
+  double x = p.x - origin_x_ + offset_x_;
+  double y = p.y - origin_y_ + offset_y_;
   
-  double w = image_surface_->w * scale_x_;
-  double h = image_surface_->h * scale_y_;
+  double w = image_surface_->w * scale_x_ * scale_;
+  double h = image_surface_->h * scale_y_ * scale_;
   
   GLuint texture;  // This is a handle to our texture object
   GLenum texture_format;

@@ -127,18 +127,10 @@ void Game::Run() {
   
   Image myGraphic;
   myGraphic.LoadImage("./assets/heart.png");
-  myGraphic.SetOffset(-80, -70);
+  myGraphic.CenterOrigin();
   myGraphic.SetScroll(0.5f, 0.5f);
   
-  myGraphic.Render(Point(600,100));
-  
-  Image myGraphic1;
-  myGraphic1.LoadImage("./assets/heart.png");
-  myGraphic1.SetOffset(-80, -70);
-  myGraphic1.SetFlipped(true);
-  myGraphic1.SetScroll(1.0f, 1.0f);
-  
-  myGraphic1.Render(Point(600,300));
+  myGraphic.Render(Point(400,250));
   
   glPopMatrix();
   

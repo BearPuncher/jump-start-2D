@@ -25,6 +25,10 @@ public:
     return alpha_;
   };
   
+  inline void SetScale(double scale) {
+    scale_ = scale;
+  };
+  
   inline void SetClippingRectangle(Point p, int w, int h) {
     clip_rect_.p = p;
     clip_rect_.w = w;
@@ -47,9 +51,40 @@ public:
     return flipped_;
   };
   
+  inline void SetOriginX(int origin_x) {
+    origin_x_ = origin_x;
+  };
+  
+  inline void SetOriginY(int origin_y) {
+    origin_y_ = origin_y;
+  };
+  
+  inline void CenterOrigin() {
+    origin_x_ = image_surface_->w/2;
+    origin_y_ = image_surface_->h/2;
+  };
+  
+  inline int GetWidth() {
+    return image_surface_->w;
+  };
+  
+  inline int GetHeight() {
+    return image_surface_->h;
+  };
+  
+  inline int GetScaledWidth() {
+    return image_surface_->w * scale_x_ * scale_;
+  };
+  
+  inline int GetScaledHeight() {
+    return image_surface_->h * scale_y_ * scale_;
+  };
+  
 protected:
-  float alpha_; // value 0 to 1
-  float angle_; //0
+  double alpha_; // value 0 to 1
+  double angle_; //0
+  
+  double scale_; //Affects X&Y
   
   //blend mode
   struct {
@@ -60,6 +95,9 @@ protected:
   
   Uint32 colour_; //0xFFFFFF for no tint
   bool flipped_;
+  
+  int origin_x_;
+  int origin_y_;
   
 private:
 };
@@ -91,26 +129,9 @@ private:
  public function set drawMask(value:BitmapData):void 
  
  
- 
- _flip	property	 
- protected var _flip:BitmapData
- _flipped	property	 
- protected var _flipped:Boolean
- flipped	property	 
- flipped:Boolean  [read-write]
- If you want to draw the Image horizontally flipped. This is faster than setting scaleX to -1 if your image isn't transformed.
- 
- Implementation 
- public function get flipped():Boolean 
- public function set flipped(value:Boolean):void 
  _flips	property	 
  protected static var _flips:Object
- height	property	 
- height:uint  [read-only]
- Height of the image.
  
- Implementation 
- public function get height():uint 
  locked	property	 
  locked:Boolean  [read-only]
  True if the image is locked.
@@ -119,38 +140,7 @@ private:
  public function get locked():Boolean 
  _matrix	property	 
  protected var _matrix:Matrix
- originX	property	 
- public var originX:Number = 0
- X origin of the image, determines transformation point.
- 
- originY	property	 
- public var originY:Number = 0
- Y origin of the image, determines transformation point.
- 
- scale	property	 
- public var scale:Number = 1
- Scale of the image, affects both x and y scale.
- 
- scaledHeight	property	 
- scaledHeight:uint  [read-only]
- The scaled height of the image.
- 
- Implementation 
- public function get scaledHeight():uint 
- scaledWidth	property	 
- scaledWidth:uint  [read-only]
- The scaled width of the image.
- 
- Implementation 
- public function get scaledWidth():uint 
- scaleX	property	 
- public var scaleX:Number = 1
- X scale of the image.
- 
- scaleY	property	 
- public var scaleY:Number = 1
- Y scale of the image.
- 
+
  smooth	property	 
  public var smooth:Boolean
  If the image should be drawn transformed with pixel smoothing. This will affect drawing performance, but look less pixelly.
@@ -194,14 +184,6 @@ private:
  source:* — Source image.
  
  clipRect:Rectangle (default = null) — Optional rectangle defining area of the source image to draw.
- Method detail
- centerOO	()	method
- public function centerOO():void
- Centers the Image's originX/Y to its center.
- 
- centerOrigin	()	method	 
- public function centerOrigin():void
- Centers the Image's originX/Y to its center.
  
  clear	()	method	 
  public function clear():void
