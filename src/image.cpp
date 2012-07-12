@@ -6,6 +6,8 @@ Image::Image():Graphic() {
   
   scale_ = 1;
   
+  blend_mode_ = NORMAL;
+  
   //clip_rect_;
 
   colour_ = 0xffffff;
@@ -75,11 +77,17 @@ void Image::Render(Point p) {
   
   if (number_of_pixels == 4) {
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    ApplyBlendFunction();
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   }
   
+  //If clip_rect is not yet defined, values will be x = 0 y = 0 w = 0 h =0
+  //This will cause the whole screen to be displayed - fingers crossed
+  glEnable(GL_SCISSOR_TEST);
+  glScissor(clip_rect_.p.x, clip_rect_.p.y, clip_rect_.w, clip_rect_.h);
+  
   //No tint
-  glColor3f(HEX3_TO_FLOAT(colour_));
+  glColor4f(HEX3_TO_FLOAT(colour_), alpha_);
   
   //Needs to be called before mapping a texture
   glEnable(GL_TEXTURE_2D);
@@ -91,25 +99,27 @@ void Image::Render(Point p) {
   //Draw flipped
   if (!flipped_) {
     //Bottom-left vertex (corner)
-    glTexCoord2i( 0, 0 ); glVertex3f( x, y, 0.0f );
+    glTexCoord2f( 0, 0 ); glVertex3f( x, y, 0.0f );
     //Bottom-right vertex (corner)
-    glTexCoord2i( 1, 0 ); glVertex3f( x+w, y, 0.f );
+    glTexCoord2f( 1, 0 ); glVertex3f( x+w, y, 0.f );
     //Top-right vertex (corner)
-    glTexCoord2i( 1, 1 ); glVertex3f( x+w, y+h, 0.f );
+    glTexCoord2f( 1, 1 ); glVertex3f( x+w, y+h, 0.f );
     //Top-left vertex (corner)
-    glTexCoord2i( 0, 1 ); glVertex3f( x, y+h, 0.f );
+    glTexCoord2f( 0, 1 ); glVertex3f( x, y+h, 0.f );
   } else {
     //Bottom-left vertex (corner)
-    glTexCoord2i( 1, 0 ); glVertex3f( x, y, 0.0f );
+    glTexCoord2f( 1, 0 ); glVertex3f( x, y, 0.0f );
     //Bottom-right vertex (corner)
-    glTexCoord2i( 0, 0 ); glVertex3f( x+w, y, 0.f );
+    glTexCoord2f( 0, 0 ); glVertex3f( x+w, y, 0.f );
     //Top-right vertex (corner)
-    glTexCoord2i( 0, 1 ); glVertex3f( x+w, y+h, 0.f );
+    glTexCoord2f( 0, 1 ); glVertex3f( x+w, y+h, 0.f );
     //Top-left vertex (corner)
-    glTexCoord2i( 1, 1 ); glVertex3f( x, y+h, 0.f );    
+    glTexCoord2f( 1, 1 ); glVertex3f( x, y+h, 0.f );    
   }
   
   glEnd();
+  
+  glDisable(GL_SCISSOR_TEST);
   
   glPopMatrix();
   
@@ -121,3 +131,53 @@ void Image::Render(Point p) {
 void Image::Update(double dt) {
   
 }
+
+
+void Image::ApplyBlendFunction() {
+  switch (blend_mode_) {
+    case ADD:
+      glBlendFunc(GL_ONE, GL_ONE);
+      break;
+    case ALPHA:
+      //glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+      break;
+    case DARKEN:
+      //glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+      break;
+    case DIFFERENCE:
+      glBlendFunc(GL_ONE_MINUS_SRC_COLOR, GL_ONE_MINUS_DST_COLOR);
+      break;
+    case ERASE:
+      break;
+    case HARDLIGHT:
+      break;
+    case INVERT:
+      glBlendFunc(GL_ONE_MINUS_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
+      //glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE_MINUS_SRC_COLOR);
+      break;
+    case LAYER:
+      break;
+    case LIGHTEN:
+      glBlendFunc(GL_DST_COLOR, GL_ONE);
+      break;
+    case MULTIPLY: //NOPE
+      glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
+      break;
+    case NORMAL:
+      glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+      break;
+    case OVERLAY:
+      break;
+    case SCREEN:
+      break;
+    case SHADER:
+      break;
+    case SUBTRACT:
+      glBlendFunc(GL_ZERO, GL_ONE_MINUS_SRC_ALPHA);
+      break;
+    default:
+      glBlendFunc(GL_ZERO, GL_ZERO);
+      break;
+  }
+}
+
