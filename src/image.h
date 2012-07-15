@@ -32,10 +32,13 @@ public:
     SUBTRACT
   };
 
+  static Image CreateRectangle(int width, int height, Uint32 colour = 0xFFFFFF, float alpha = 1);
+  static Image CreateCircle(int radius, Uint32 colour = 0xFFFFFF, float alpha = 1); 
   
   Image();
   virtual ~Image();
-  Image(const char* filename, Rectangle* clip_rect = NULL);
+  Image(const char* filename, SDL_Rect* clip_rect = NULL);
+  Image(SDL_Surface* image_surface_, SDL_Rect* clip_rect = NULL);
   
   virtual void Render(Point p);
   virtual void Update(double dt);
@@ -61,9 +64,12 @@ public:
   };
   
   inline void SetClippingRectangle(Point p, int w, int h) {
-    clip_rect_->p = p;
+    clip_rect_ = new SDL_Rect;
+    clip_rect_->x = p.x;
+    clip_rect_->y = p.x;
     clip_rect_->w = w;
     clip_rect_->h = h;
+    //SDL_SetClipRect(image_surface_, clip_rect_);
   };
   
   inline void SetColour(Uint32 colour) {
@@ -90,7 +96,7 @@ public:
     origin_y_ = origin_y;
   };
   
-  inline void CenterOrigin() {
+  inline virtual void CenterOrigin() {
     origin_x_ = image_surface_->w/2;
     origin_y_ = image_surface_->h/2;
   };
@@ -126,10 +132,11 @@ protected:
   int origin_x_;
   int origin_y_;
   
-  Rectangle* clip_rect_;
+  SDL_Rect* clip_rect_;
   
   void ApplyBlendFunction();
-  
+  static GLuint CreateOpenGLTexture(SDL_Surface* image_surface);
+  virtual void DrawTexture(Point p);
 private:
 };
 

@@ -42,3 +42,7 @@ void Graphic::LoadImage( const char * filename) {
   
   image_surface_ = surface_return;
 }
+
+void Graphic::LoadImage(SDL_Surface* image_surface) {
+  image_surface_ = image_surface;
+}

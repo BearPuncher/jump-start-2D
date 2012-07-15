@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include "globals.h"
-
+#include "spritemap.h"
 /*
  Game
  
@@ -61,6 +61,7 @@ protected:
   
   GameStatusCode game_status_;
   
+  Spritemap* img;
 };
 
 #endif // GAME_H

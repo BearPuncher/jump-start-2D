@@ -42,6 +42,7 @@ public:
   };
   
   void LoadImage( const char * filename);
+  void LoadImage(SDL_Surface* image_surface);
   
 protected:
   bool active_;

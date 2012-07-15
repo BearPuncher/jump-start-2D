@@ -17,10 +17,12 @@ Game::Game() {
   sdl_flags_ = 0;
   
   full_screen_ = false;
+  
+  img = NULL;
 }
 
 Game::Game(int screen_width, int screen_height, 
-                         std::string window_name, bool full_screen) {
+           std::string window_name, bool full_screen) {
   screen_width_ = screen_width;
   screen_height_ = screen_height;
   
@@ -32,6 +34,8 @@ Game::Game(int screen_width, int screen_height,
   sdl_flags_ = 0;
   
   full_screen_ = full_screen;
+  
+  img = NULL;
 }
 
 Game::~Game() {
@@ -125,7 +129,7 @@ void Game::Run() {
   //Render code
   glPushMatrix();
   
-
+  /* Some code goes here */
   
   glPopMatrix();
   
