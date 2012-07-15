@@ -125,12 +125,7 @@ void Game::Run() {
   //Render code
   glPushMatrix();
   
-  Image myGraphic;
-  myGraphic.LoadImage("./assets/heart.png");
-  myGraphic.CenterOrigin();
-  myGraphic.SetScroll(0.5f, 0.5f);
-  
-  myGraphic.Render(Point(400,250));
+
   
   glPopMatrix();
   

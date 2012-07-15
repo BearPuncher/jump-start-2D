@@ -18,6 +18,15 @@ namespace geometry {
 		Point(int _x = 0, int _y = 0) : x(_x), y(_y) {}
 	} ;
 
+  //Change to just rect
+  struct Rectangle {
+    Point p;
+    int w;
+    int h;
+    Rectangle(Point _p, int _w, int _h) :
+    p(_p), w(_w), h(_h) {};
+  };
+  
   //Shape Definition
 	typedef std::vector<Point> Shape;
 

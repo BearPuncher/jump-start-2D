@@ -31,9 +31,11 @@ public:
     SHADER,
     SUBTRACT
   };
+
   
   Image();
   virtual ~Image();
+  Image(const char* filename, Rectangle* clip_rect = NULL);
   
   virtual void Render(Point p);
   virtual void Update(double dt);
@@ -46,6 +48,10 @@ public:
     return alpha_;
   };
   
+  inline void SetAngle(double angle) {
+    angle_ = angle;
+  }
+  
   inline void SetScale(double scale) {
     scale_ = scale;
   };
@@ -55,9 +61,9 @@ public:
   };
   
   inline void SetClippingRectangle(Point p, int w, int h) {
-    clip_rect_.p = p;
-    clip_rect_.w = w;
-    clip_rect_.h = h;
+    clip_rect_->p = p;
+    clip_rect_->w = w;
+    clip_rect_->h = h;
   };
   
   inline void SetColour(Uint32 colour) {
@@ -114,17 +120,13 @@ protected:
   //blend mode
   BlendMode blend_mode_;
   
-  struct {
-    Point p;
-    int w;
-    int h;
-  } clip_rect_;
-  
   Uint32 colour_; //0xFFFFFF for no tint
   bool flipped_;
   
   int origin_x_;
   int origin_y_;
+  
+  Rectangle* clip_rect_;
   
   void ApplyBlendFunction();
   

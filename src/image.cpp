@@ -8,8 +8,8 @@ Image::Image():Graphic() {
   
   blend_mode_ = NORMAL;
   
-  //clip_rect_;
-
+  clip_rect_ = NULL;
+  
   colour_ = 0xffffff;
   flipped_ = false;
   
@@ -19,6 +19,25 @@ Image::Image():Graphic() {
 
 Image::~Image() {
   
+}
+
+Image::Image(const char* filename, Rectangle* clip_rect):Graphic() {
+  LoadImage(filename);
+  
+  alpha_ = 1; // value 0 to 1
+  angle_ = 0;
+  
+  scale_ = 1;
+  
+  blend_mode_ = NORMAL;
+  
+  clip_rect_ = clip_rect;
+  
+  colour_ = 0xffffff;
+  flipped_ = false;
+  
+  origin_x_ = 0;
+  origin_y_ = 0;
 }
 
 void Image::Render(Point p) {
@@ -56,9 +75,18 @@ void Image::Render(Point p) {
     exit(-1);
   }
   glPushMatrix();
+  glLoadIdentity();
   
+  //Set rotate point for the quad
+  glTranslatef(p.x, p.y, 0);
+  glRotatef(angle_, 0.0f, 0.0, 1.0f);
+  glTranslatef(-p.x, -p.y, 0);
+  
+  //glPushMatrix();
   glTranslatef(-JS.GetCameraPoint().x * (1.0f - scroll_x_),
                -JS.GetCameraPoint().y * (1.0f - scroll_y_), 0);
+  
+  
   
   glGenTextures( 1, &texture );
   
@@ -83,8 +111,10 @@ void Image::Render(Point p) {
   
   //If clip_rect is not yet defined, values will be x = 0 y = 0 w = 0 h =0
   //This will cause the whole screen to be displayed - fingers crossed
-  glEnable(GL_SCISSOR_TEST);
-  glScissor(clip_rect_.p.x, clip_rect_.p.y, clip_rect_.w, clip_rect_.h);
+  if (clip_rect_ != NULL) {
+    glEnable(GL_SCISSOR_TEST);
+    glScissor(clip_rect_->p.x, clip_rect_->p.y, clip_rect_->w, clip_rect_->h);
+  }
   
   //No tint
   glColor4f(HEX3_TO_FLOAT(colour_), alpha_);
@@ -119,8 +149,10 @@ void Image::Render(Point p) {
   
   glEnd();
   
-  glDisable(GL_SCISSOR_TEST);
-  
+  if (clip_rect_ != NULL) {
+    glDisable(GL_SCISSOR_TEST);
+  }
+  glPopMatrix();
   glPopMatrix();
   
   if (number_of_pixels == 4) {
