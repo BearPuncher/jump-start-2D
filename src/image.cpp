@@ -181,7 +181,7 @@ void Image::DrawTexture(Point p) {
   glEnd();
 }
 
-void Image::Update(double dt) {
+void Image::Update() {
   
 }
 

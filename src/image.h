@@ -41,7 +41,7 @@ public:
   Image(SDL_Surface* image_surface_, SDL_Rect* clip_rect = NULL);
   
   virtual void Render(Point p);
-  virtual void Update(double dt);
+  virtual void Update();
   
   inline void SetAlpha(float alpha) {
     alpha_ = alpha;

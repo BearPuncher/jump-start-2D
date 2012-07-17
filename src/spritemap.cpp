@@ -44,8 +44,9 @@ Spritemap::Spritemap(const char * filename, int frame_width, int frame_height):I
   
 }
 
-void Spritemap::Update(double dt) {
-  Image::Update(dt);
+void Spritemap::Update() {
+  //Image::Update(dt);
+  float dt = 0.02;
   if (current_animation_ != NULL && !complete_) {
     timer_ += current_animation_->frame_rate * dt * rate_;
     if (timer_ >= 1.0f) {

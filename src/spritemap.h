@@ -14,7 +14,7 @@ public:
   Spritemap(const char * filename, int frame_width = 0, int frame_height = 0);
   
   //void Render(Point p);
-  void Update(double dt);
+  virtual void Update();
   
   void Add(std::string name, int* frames, int frame_count, float frame_rate = 0, bool loop = true);
   void Play(std::string name, bool reset = false, int frame = 0);

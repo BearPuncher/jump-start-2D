@@ -11,13 +11,12 @@ public:
   Graphic();
   virtual ~Graphic();
   
-  virtual void Render(Point p) = 0;
-  virtual void Update(double dt) = 0;
+  virtual void Render(Point p) {};
+  virtual void Update() {};
   
   //Setters
-  inline void SetOffset(double offset_x, double offset_y) {
-    offset_x_ = offset_x;
-    offset_y_ = offset_y;
+  inline void SetRelative(bool relative) {
+    relative_ = relative;
   };
   
   inline void SetScaleX(double scale_x) {
@@ -33,12 +32,22 @@ public:
     scroll_y_ = scroll_y;
   };
   
-  inline void Hide() {
-    visible_ = false;
+  inline void SetVisible(bool visible) {
+    visible_ = visible;
   };
   
-  inline void Show() {
-    visible_ = true;
+  inline void SetOffset(double offset_x, double offset_y) {
+    offset_x_ = offset_x;
+    offset_y_ = offset_y;
+  };
+  
+  //Getters
+  inline bool IsVisible() {
+    return visible_;
+  };
+  
+  inline bool IsRelative() {
+    return relative_;
   };
   
   void LoadImage( const char * filename);
