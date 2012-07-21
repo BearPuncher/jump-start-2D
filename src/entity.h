@@ -6,19 +6,30 @@
 class Entity {
 public:
   Entity();
-  Entity(Point p, Graphic* graphic = NULL); /*, mask:Mask = null*/
+  Entity(Point position, Graphic* graphic = NULL); /*, mask:Mask = null*/
   virtual ~Entity();
 
   //Overridable functions
   virtual void Added();
   virtual void Update();
   virtual void Render();
+  
+  inline void SetOrigin(Point position) {
+    position_ = position;
+  };
+  
+  inline int GetLayer() {
+    return layer_;
+  };
+  
+  inline void SetLayer(int layer) {
+    layer_ = layer;
+  };
 
 protected:
   Graphic* graphic_;
-    
   Point position_;
-  
+  int layer_;
 private:
 };
 
@@ -46,9 +57,6 @@ private:
  
  height : int
  Height of the Entity's hitbox.
- 
- layer : int
- The rendering layer of this Entity.
  
  left : Number
  [read-only] The leftmost position of the Entity's hitbox.

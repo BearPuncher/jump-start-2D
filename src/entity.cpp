@@ -8,9 +8,8 @@ Entity::Entity() {
   graphic_ = NULL;
 }
 
-Entity::Entity(Point p, Graphic* graphic) {
-  position_ = p;
-  
+Entity::Entity(Point position, Graphic* graphic) {
+  position_ = position;
   graphic_ = graphic;
 }
 
@@ -23,7 +22,7 @@ void Entity::Added() {
 }
 
 void Entity::Update() {
-  position_ = input.GetMousePosition();
+
 }
 
 void Entity::Render() {

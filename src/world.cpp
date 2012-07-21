@@ -1,9 +1,38 @@
-//
-//  world.cpp
-//  JumpStart2D
-//
-//  Created by Daniel Jeffery on 21/07/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+#include "globals.h"
+#include "world.h"
 
-#include <iostream>
+World::World() {
+  
+}
+
+World::~World() {
+  
+}
+
+void World::Begin() {
+  
+}
+
+void World::End() {
+  
+}
+
+void World::Update() {
+  
+}
+
+void World::Render() {
+  
+}
+
+void World::Add() {
+  
+}
+
+void World::Remove() {
+  
+}
+
+void World::RemoveAll() {
+  
+}

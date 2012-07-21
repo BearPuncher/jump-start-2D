@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "globals.h"
-#include "game_test.h"
+#include "engine.h"
 
 using namespace std;
 
@@ -11,18 +11,18 @@ int main(int argc, char *argv[]) {
 	//B2_NOT_USED(argv);
 
   /* Initialise game */
-  GameTest game(800, 640, "My Game", false);
-  game.Init();
+  Engine engine(800, 640, "My Game", false);
+  engine.Init();
 
   /* Start game loop */
-  while(game.IsRunning()) {
+  while(engine.IsRunning()) {
     //Read input on new step
     input.ReadInput();
-    game.Run();
+    engine.Run();
   }
 
   /* Shutdown all subsystems */
-  game.Shutdown();
+  engine.Shutdown();
 
   fprintf(stderr, "Quiting....\n");
 

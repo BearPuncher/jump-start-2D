@@ -4,7 +4,7 @@
 #include "globals.h"
 #include "spritemap.h"
 /*
- Game
+ Engine
  
  Abstract class specifying the functioning of an SDL Game
  
@@ -18,18 +18,20 @@
  
  */
 
-class Game {
+class Engine {
 public:
   enum GameStatusCode {
     GAME_RUNNING = 0,
     GAME_OVER
   };
   
-  
-  Game();
-  Game(int screen_width, int screen_height,
-              std::string window_name = "", bool full_screen = false);
-  virtual ~Game();
+  Engine();
+  Engine(int screen_width, int screen_height,
+              std::string window_name = "",
+              bool full_screen = false,
+              int frame_rate = 60,
+              bool fixed_frame_rate = false);
+  virtual ~Engine();
   
   virtual bool Init();
   
@@ -51,13 +53,15 @@ public:
   };
   
 protected:
-  int screen_width_;
-  int screen_height_;
+
   int bits_per_pixel_;
   bool full_screen_;
   std::string window_name_;
   SDL_Surface* sdl_surface_;
   Uint32 sdl_flags_;
+  
+  int frame_rate_;
+  bool fixed_frame_rate_;
   
   GameStatusCode game_status_;
   

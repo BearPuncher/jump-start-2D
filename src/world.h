@@ -1,7 +1,26 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include "globals.h"
+using namespace geometry;
 
+class World {
+public:
+  World();
+  ~World();
+  
+  void Begin();
+  void End();
+  void Update();
+  void Render();
+  
+  void Add();
+  void Remove();
+  void RemoveAll();
+protected:
+  Point camera_;
+  
+};
 
 #endif
 
