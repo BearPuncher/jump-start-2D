@@ -5,13 +5,14 @@
 #include "globals.h"
 
 using namespace geometry;
+using namespace draw;
 
 class Graphic {
 public:
   Graphic();
   virtual ~Graphic();
   
-  virtual void Render(Point p) {};
+  virtual void Render(Point point, Camera camera) {};
   virtual void Update() {};
   
   //Setters

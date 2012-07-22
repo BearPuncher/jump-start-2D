@@ -3,6 +3,7 @@
 
 #include "globals.h"
 using namespace geometry;
+using namespace draw;
 
 class World {
 public:
@@ -17,9 +18,13 @@ public:
   void Add();
   void Remove();
   void RemoveAll();
-protected:
-  Point camera_;
   
+  inline Camera GetCamera() {
+    return camera_;
+  };
+  
+protected:
+  Camera camera_;
 };
 
 #endif

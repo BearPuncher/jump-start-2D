@@ -35,6 +35,12 @@ void Entity::Render() {
       point.x = point.y = 0;
     }
     
-    graphic_->Render(point);
+    Camera camera = JS.GetWorld() != NULL ? JS.GetWorld()->GetCamera() : JS.GetCamera();
+    
+    graphic_->Render(point, camera);
   }
 }
+
+void Entity::SetLayer(int layer) {
+  layer_ = layer;
+};

@@ -8,7 +8,7 @@
 #include <map>
 
 using namespace geometry;
-
+using namespace draw;
 
 class Image : public Graphic {
 public:
@@ -40,7 +40,7 @@ public:
   Image(const char* filename, SDL_Rect* clip_rect = NULL);
   Image(SDL_Surface* image_surface_, SDL_Rect* clip_rect = NULL);
   
-  virtual void Render(Point p);
+  virtual void Render(Point point, Camera camera);
   virtual void Update();
   
   inline void SetAlpha(float alpha) {

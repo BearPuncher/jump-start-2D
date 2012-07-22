@@ -4,7 +4,7 @@
 #include "globals.h"
 #include "world.h"
 using namespace geometry;
-
+using namespace draw;
 //JS is a public external class that tracks some global application variables
 
 class JumpStartController {
@@ -12,11 +12,13 @@ public:
   JumpStartController();
   
   //Camera functions
-  Point GetCameraPoint();
+  inline Camera GetCamera() {
+    return camera_;
+  };
   
   void SetCameraOrigin();
   
-  void SetCameraPosition(Point p);
+  void SetCameraPosition(Point position);
   
   void SetCameraRotation(float degrees);
   
@@ -40,21 +42,22 @@ public:
   };
   
   inline void SetWorld(World* world) {
+    if (world_ == world) return;
     next_world_ = world;
   };
   
-protected:
-  //Camera struct
-  struct {
-    Point position;
-    float rotation;
-  } camera;
+  //Update to new world if next_world_ is set
+  void CheckWorld();
   
+protected:
+
   int screen_width_;
   int screen_height_;
 
   World* world_;
   World* next_world_;
+  
+  Camera camera_;
 private:
 };
 

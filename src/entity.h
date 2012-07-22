@@ -1,7 +1,9 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include "globals.h"
 #include "spritemap.h"
+#include "world.h"
 
 class Entity {
 public:
@@ -22,14 +24,18 @@ public:
     return layer_;
   };
   
-  inline void SetLayer(int layer) {
-    layer_ = layer;
-  };
+  void SetLayer(int layer);
 
+  inline void SetWorld(World* world) {
+    world_ = world;
+  };
+  
 protected:
   Graphic* graphic_;
   Point position_;
   int layer_;
+  
+  World* world_;
 private:
 };
 
@@ -93,11 +99,5 @@ private:
  
  width : int
  Width of the Entity's hitbox.
- 
- world : World
- [read-only] The World object this Entity has been added to.
- 
- 
-
 
 */

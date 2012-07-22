@@ -12,6 +12,12 @@ Engine::Engine() {
   
   window_name_ = "";
   
+  frame_rate_ = 60;
+  fixed_frame_rate_ = false;
+  
+  paused_ = false;
+  debug_ = true;
+  
   sdl_surface_ = NULL;
   sdl_flags_ = 0;
   
@@ -38,6 +44,9 @@ Engine::Engine(int screen_width, int screen_height,
   frame_rate_ = frame_rate;
   fixed_frame_rate_ = fixed_frame_rate;
   
+  paused_ = false;
+  debug_ = true;
+  
   sdl_surface_ = NULL;
   sdl_flags_ = 0;
   
@@ -46,6 +55,8 @@ Engine::Engine(int screen_width, int screen_height,
   img = NULL;
   
   game_status_ = GAME_RUNNING;
+  
+  JS.SetWorld(new World());
 }
 
 Engine::~Engine() {
@@ -131,33 +142,44 @@ bool Engine::Init() {
 
 
 void Engine::Run() {
-  glClearColor(1,1,1,0);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glLoadIdentity();
-  
-  glPushMatrix();
-  //Camera position
-  JS.RenderCamera();
-  
-  //Render code
-  glPushMatrix();
-  
-  /* Some code goes here */
-  
-  //Test
-  Entity entity(Point(10,10), new Image("./assets/heart.png"));
-  entity.Update();
-  entity.Render();
-  
-  glPopMatrix();
-  
-  glPopMatrix();
+
+  /* Render and logic code */
+  Update();
+  Render();
   
   SDL_GL_SwapBuffers();
   
   if (input.KeyPressed(SDLK_ESCAPE) || input.WindowClosed()) {
     game_status_ = GAME_OVER;
   }
+}
+
+void Engine::Update() {
+  JS.CheckWorld();
+  World* current_world = JS.GetWorld();
+  current_world->Update();
+}
+
+void Engine::Render() {
+  glClearColor(1,1,1,0);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glPushMatrix();
+  glLoadIdentity();
+  
+  World* current_world = JS.GetWorld();
+  
+  glPushMatrix();
+  
+  if (current_world != NULL) {
+    current_world->Render();
+  } else {
+    //Render static camera if no world exists
+    JS.RenderCamera();
+  }
+  
+  glPopMatrix();
+  
+  glPopMatrix();
 }
 
 void Engine::SetWindowName(std::string name) {
@@ -173,7 +195,6 @@ void Engine::ResizeWindow(int width, int height) {
                                   bits_per_pixel_, sdl_flags_);
   
   glViewport(0, 0, width, height);
-  
   
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();

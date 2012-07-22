@@ -35,7 +35,10 @@ public:
   
   virtual bool Init();
   
-  virtual void Run();
+  void Run();
+  virtual void Render();
+  virtual void Update();
+  
   virtual void Shutdown() {
       fprintf(stderr, "Quiting SDL.\n");
       SDL_Quit();
@@ -62,10 +65,14 @@ protected:
   
   int frame_rate_;
   bool fixed_frame_rate_;
+  bool paused_;
+  bool debug_;
   
   GameStatusCode game_status_;
   
   Spritemap* img;
+  
+  void CheckWorld();
 };
 
 #endif // GAME_H

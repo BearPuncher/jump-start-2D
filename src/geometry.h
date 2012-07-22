@@ -16,7 +16,7 @@ namespace geometry {
 		double	x;
 		double	y;
 		Point(int _x = 0, int _y = 0) : x(_x), y(_y) {}
-	} ;
+	};
 
   //Change to just rect
   struct Rectangle {

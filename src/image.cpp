@@ -97,7 +97,7 @@ Image::Image(SDL_Surface* image_surface, SDL_Rect* clip_rect):Graphic() {
   origin_y_ = 0;
 }
 
-void Image::Render(Point p) {
+void Image::Render(Point point, Camera camera) {
   //If not visible, dont render
   if (!visible_) {
     return;
@@ -106,16 +106,14 @@ void Image::Render(Point p) {
   GLuint texture = CreateOpenGLTexture(image_surface_);
   
   glPushMatrix();
-  glLoadIdentity();
   
   //Set rotate point for the quad
-  glTranslatef(p.x, p.y, 0);
+  glTranslatef(point.x, point.y, 0);
   glRotatef(angle_, 0.0f, 0.0, 1.0f);
-  glTranslatef(-p.x, -p.y, 0);
+  glTranslatef(-point.x, -point.y, 0);
   
-  //glPushMatrix();
-  glTranslatef(-JS.GetCameraPoint().x * (1.0f - scroll_x_),
-               -JS.GetCameraPoint().y * (1.0f - scroll_y_), 0);
+  glTranslatef(-camera.position.x * (1.0f - scroll_x_),
+               -camera.position.y * (1.0f - scroll_y_), 0);
   
   //if (number_of_pixels == 4) {
     glEnable(GL_BLEND);
@@ -137,12 +135,11 @@ void Image::Render(Point p) {
   // Bind the texture to which subsequent calls refer to
   glBindTexture( GL_TEXTURE_2D, texture );
   
-  DrawTexture(p);
+  DrawTexture(point);
   
   if (clip_rect_ != NULL) {
     glDisable(GL_SCISSOR_TEST);
   }
-  glPopMatrix();
   glPopMatrix();
   
   //if (number_of_pixels == 4) {

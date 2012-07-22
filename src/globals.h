@@ -12,6 +12,7 @@
 //#include <Box2D/Box2D.h>
 
 #include "geometry.h"
+#include "draw.h"
 #include "input.h"
 #include "jumpstartcontroller.h"
 
