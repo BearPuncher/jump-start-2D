@@ -1,7 +1,10 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "globals.h"
+#include "entity.h"
+#include "geometry.h"
+#include "draw.h"
+
 using namespace geometry;
 using namespace draw;
 

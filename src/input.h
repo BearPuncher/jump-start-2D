@@ -2,6 +2,8 @@
 #define INPUT_H
 
 #include "globals.h"
+#include "geometry.h"
+#include <SDL/SDL.h>
 using namespace geometry;
 
 class Input {

@@ -2,7 +2,8 @@
 #define GRAPHIC_H
 
 #include <SDL/SDL_image.h>
-#include "globals.h"
+#include "geometry.h"
+#include "draw.h"
 
 using namespace geometry;
 using namespace draw;

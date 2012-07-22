@@ -1,5 +1,5 @@
-#include "globals.h"
 #include "entity.h"
+#include "globals.h"
 
 Entity::Entity() {
   position_.x = 0;

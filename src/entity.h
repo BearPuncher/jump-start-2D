@@ -1,9 +1,10 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "globals.h"
-#include "spritemap.h"
 #include "world.h"
+#include "graphic.h"
+
+class World;
 
 class Entity {
 public:

@@ -1,6 +1,4 @@
-#include "graphic.h"
 #include "globals.h"
-
 #include "spritemap.h"
 
 Spritemap::Spritemap():Image(){

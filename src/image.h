@@ -4,6 +4,8 @@
 #include "globals.h"
 #include "graphic.h"
 
+#include <SDL/SDL_opengl.h>
+
 #include <string>
 #include <map>
 

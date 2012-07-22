@@ -1,7 +1,6 @@
 #ifndef SPRITEMAP_H
 #define SPRITEMAP_H
 
-#include "globals.h"
 #include "image.h"
 
 #include <string>

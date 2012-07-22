@@ -1,6 +1,5 @@
-#include "globals.h"
 #include "world.h"
-#include "entity.h"
+#include <SDL/SDL_opengl.h>
 
 World::World() {
   camera_.position = Point(0,0);
@@ -28,11 +27,6 @@ void World::Render() {
   glTranslatef(camera_.position.x, camera_.position.y, 0);
   
   glPushMatrix();
-  
-  //Test
-  Entity entity(Point(100,50), new Image("./assets/heart.png"));
-  entity.Update();
-  entity.Render();
   
   glPopName();
   

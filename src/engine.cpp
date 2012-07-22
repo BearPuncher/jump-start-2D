@@ -1,9 +1,6 @@
 #include "engine.h"
-#include "entity.h"
-#include "graphic.h"
-
-using namespace std;
-using namespace geometry;
+#include <SDL/SDL_opengl.h>
+#include "globals.h"
 
 //Default Constructor
 Engine::Engine() {
@@ -22,8 +19,6 @@ Engine::Engine() {
   sdl_flags_ = 0;
   
   full_screen_ = false;
-  
-  img = NULL;
   
   game_status_ = GAME_RUNNING;
   
@@ -51,8 +46,6 @@ Engine::Engine(int screen_width, int screen_height,
   sdl_flags_ = 0;
   
   full_screen_ = full_screen;
-  
-  img = NULL;
   
   game_status_ = GAME_RUNNING;
   

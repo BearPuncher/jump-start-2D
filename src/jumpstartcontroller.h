@@ -1,11 +1,15 @@
 #ifndef JS_H
 #define JS_H
 
-#include "globals.h"
 #include "world.h"
+#include "geometry.h"
+#include "draw.h"
+
 using namespace geometry;
 using namespace draw;
 //JS is a public external class that tracks some global application variables
+
+class World;
 
 class JumpStartController {
 public:

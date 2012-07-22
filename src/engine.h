@@ -1,8 +1,9 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef ENGINE_H
+#define ENGINE_H
 
-#include "globals.h"
-#include "spritemap.h"
+#include <string>
+#include <SDL/SDL.h>
+
 /*
  Engine
  
@@ -69,8 +70,6 @@ protected:
   bool debug_;
   
   GameStatusCode game_status_;
-  
-  Spritemap* img;
   
   void CheckWorld();
 };
