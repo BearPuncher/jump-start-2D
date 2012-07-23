@@ -1,5 +1,7 @@
 #include "entity.h"
 #include "globals.h"
+#include "world.h"
+#include "graphic.h"
 
 Entity::Entity() {
   position_.x = 0;

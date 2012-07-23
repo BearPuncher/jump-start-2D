@@ -1,6 +1,8 @@
-#include "engine.h"
 #include <SDL/SDL_opengl.h>
 #include "globals.h"
+#include "engine.h"
+#include "world.h"
+
 
 //Default Constructor
 Engine::Engine() {

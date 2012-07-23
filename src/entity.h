@@ -1,10 +1,11 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "world.h"
-#include "graphic.h"
+#include "geometry.h"
+using namespace geometry;
 
 class World;
+class Graphic;
 
 class Entity {
 public:

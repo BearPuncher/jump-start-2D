@@ -1,7 +1,7 @@
 #ifndef JS_H
 #define JS_H
 
-#include "world.h"
+
 #include "geometry.h"
 #include "draw.h"
 

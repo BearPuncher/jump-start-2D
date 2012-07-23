@@ -1,6 +1,6 @@
-#include "jumpstartcontroller.h"
 #include <SDL/SDL_opengl.h>
-
+#include "jumpstartcontroller.h"
+#include "world.h"
 
 JumpStartController JS;
 
