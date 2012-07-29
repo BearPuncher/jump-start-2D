@@ -18,31 +18,31 @@ Graphic::~Graphic() {
 }
 
 
-void Graphic::LoadImage( const char * filename) {
+void Graphic::LoadSurface( const char * filename) {
   SDL_Surface* surface_temp = NULL;
   SDL_Surface* surface_return = NULL;
-  
+
   if((surface_temp = IMG_Load(filename)) == NULL) {
     fprintf(stderr, "Image %s not found.\n", filename);
     exit(-1);
   }
-  
+
   // Check that the image's width is a power of 2
   if ( (surface_temp->w & (surface_temp->w - 1)) != 0 ) {
     fprintf(stderr, "warning: %s width is not a power of 2\n", filename);
   }
-  
+
   // Also check if the height is a power of 2
   if ( (surface_temp->h & (surface_temp->h - 1)) != 0 ) {
     fprintf(stderr, "warning: %s height is not a power of 2\n", filename);
   }
-  
+
   surface_return = SDL_DisplayFormatAlpha(surface_temp);
   SDL_FreeSurface(surface_temp);
-  
+
   image_surface_ = surface_return;
 }
 
-void Graphic::LoadImage(SDL_Surface* image_surface) {
+void Graphic::LoadSurface(SDL_Surface* image_surface) {
   image_surface_ = image_surface;
 }

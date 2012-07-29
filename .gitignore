@@ -14,6 +14,12 @@
 # MacOSX project files ignore
 *.xcodeproj
 .DS_Store
-src/assets/heart.png
 
-src/assets/mandrill.bmp
+# Codeblocks project files
+*.cbp
+*.depend
+*.layout
+
+# Assets folder
+src/assets
+bin
