@@ -2,7 +2,8 @@
 #include "globals.h"
 #include "engine.h"
 #include "world.h"
-
+#include "entity.h"
+#include "image.h"
 
 //Default Constructor
 Engine::Engine() {
@@ -24,7 +25,6 @@ Engine::Engine() {
   
   game_status_ = GAME_RUNNING;
   
-  JS.SetWorld(new World());
 }
 
 Engine::Engine(int screen_width, int screen_height,
@@ -33,7 +33,6 @@ Engine::Engine(int screen_width, int screen_height,
                int frame_rate,
                bool fixed_frame_rate) {
   JS.SetDimensions(screen_width, screen_height);
-  
   bits_per_pixel_ = 32;
   
   window_name_ = window_name;
@@ -51,7 +50,6 @@ Engine::Engine(int screen_width, int screen_height,
   
   game_status_ = GAME_RUNNING;
   
-  JS.SetWorld(new World());
 }
 
 Engine::~Engine() {
@@ -132,6 +130,9 @@ bool Engine::Init() {
   
   glLoadIdentity();
   
+  JS.SetWorld(new World());
+  JS.CheckWorld();
+  
   return true;
 };
 
@@ -150,9 +151,12 @@ void Engine::Run() {
 }
 
 void Engine::Update() {
-  JS.CheckWorld();
   World* current_world = JS.GetWorld();
-  current_world->Update();
+  
+  if (current_world != NULL) {
+    current_world->Update();
+  }
+  JS.CheckWorld();
 }
 
 void Engine::Render() {

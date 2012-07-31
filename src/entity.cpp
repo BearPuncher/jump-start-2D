@@ -7,7 +7,12 @@ Entity::Entity() {
   position_.x = 0;
   position_.y = 0;
   
+  layer_ = 0;
+  
+  visible = false;
+  
   graphic_ = NULL;
+  world_ = NULL;
 }
 
 Entity::Entity(Point position, Graphic* graphic) {

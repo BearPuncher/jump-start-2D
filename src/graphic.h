@@ -17,6 +17,14 @@ public:
   virtual void Update() {};
 
   //Setters
+  inline void SetActive(bool active) {
+    active_ = active;
+  };
+  
+  inline bool IsActive() {
+    return active_;
+  };
+  
   inline void SetRelative(bool relative) {
     relative_ = relative;
   };

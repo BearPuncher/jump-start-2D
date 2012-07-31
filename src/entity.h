@@ -18,6 +18,10 @@ public:
   virtual void Update();
   virtual void Render();
   
+  inline Graphic* GetGraphic() {
+    return graphic_;
+  };
+  
   inline void SetOrigin(Point position) {
     position_ = position;
   };
@@ -32,10 +36,16 @@ public:
     world_ = world;
   };
   
+  inline bool IsVisible() {
+    return visible;
+  };
+  
 protected:
   Graphic* graphic_;
   Point position_;
   int layer_;
+  
+  bool visible;
   
   World* world_;
 private:

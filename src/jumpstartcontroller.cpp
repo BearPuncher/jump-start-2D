@@ -8,11 +8,17 @@ JumpStartController::JumpStartController() {
   //Setup camera at start
   camera_.position = Point(0,0);
   camera_.rotation = 0.0f;
+  
+  world_ = NULL;
+  next_world_ = NULL;
 }
 
 void JumpStartController::SetCameraOrigin() {
   camera_.position = Point(0,0);
   camera_.rotation = 0;
+  
+  world_ = NULL;
+  next_world_ = NULL;
 }
 
 void JumpStartController::SetCameraPosition(Point position) {

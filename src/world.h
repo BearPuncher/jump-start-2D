@@ -1,6 +1,8 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+#include <list>
+#include <queue>
 #include "geometry.h"
 #include "draw.h"
 
@@ -17,10 +19,11 @@ public:
   void Begin();
   void End();
   void Update();
+  void UpdateLists();
   void Render();
   
-  void Add();
-  void Remove();
+  void Add(Entity* entity);
+  void Remove(Entity* entity);
   void RemoveAll();
   
   inline Camera GetCamera() {
@@ -29,6 +32,20 @@ public:
   
 protected:
   Camera camera_;
+  
+  std::queue< Entity* > to_add_;
+  std::queue< Entity* > to_remove_;
+  
+  std::list< Entity* > update_list_;
+  std::list< Entity* > render_list_;
+  int count_;
+  
+private:
+  void AddUpdate(Entity* entity);
+  void RemoveUpdate(Entity* entity);
+  void AddRender(Entity* entity);
+  void RemoveRender(Entity* entity);
+  
 };
 
 #endif
