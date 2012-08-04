@@ -156,6 +156,7 @@ void Engine::Update() {
   if (current_world != NULL) {
     current_world->Update();
   }
+  current_world->UpdateLists();
   JS.CheckWorld();
 }
 
@@ -170,7 +171,9 @@ void Engine::Render() {
   glPushMatrix();
   
   if (current_world != NULL) {
-    current_world->Render();
+    if (current_world->IsVisible()) {
+      current_world->Render();
+    }
   } else {
     //Render static camera if no world exists
     JS.RenderCamera();
@@ -181,7 +184,7 @@ void Engine::Render() {
   glPopMatrix();
 }
 
-void Engine::SetWindowName(std::string name) {
+void Engine::SetWindowName(const char* name) {
   window_name_ = name;
   SDL_WM_SetCaption(window_name_.c_str(), NULL);
 };

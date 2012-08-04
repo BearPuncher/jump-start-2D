@@ -3,6 +3,7 @@
 
 #include <list>
 #include <queue>
+#include "globals.h"
 #include "geometry.h"
 #include "draw.h"
 
@@ -26,11 +27,34 @@ public:
   void Remove(Entity* entity);
   void RemoveAll();
   
+  //Get Current world camera
   inline Camera GetCamera() {
     return camera_;
   };
   
+  //Get Position of mouse with offset.
+  inline Point GetMouse() {
+    Point mouse_position = input.GetMousePosition();
+    return (Point(camera_.position.x + mouse_position.x, 
+                  camera_.position.y + mouse_position.y));
+  };
+  
+  inline int GetCount() {
+    return count_;
+  };
+  
+  inline bool IsVisible() {
+    return visible_;
+  };
+  
 protected:
+  void AddUpdate(Entity* entity);
+  void RemoveUpdate(Entity* entity);
+  void AddRender(Entity* entity);
+  void RemoveRender(Entity* entity);
+  
+  void AddCollisionType(Entity* entity);
+  
   Camera camera_;
   
   std::queue< Entity* > to_add_;
@@ -39,28 +63,18 @@ protected:
   std::list< Entity* > update_list_;
   std::list< Entity* > render_list_;
   int count_;
+  bool visible_;
+  
+  Entity* e1;
+  Entity* e2;
   
 private:
-  void AddUpdate(Entity* entity);
-  void RemoveUpdate(Entity* entity);
-  void AddRender(Entity* entity);
-  void RemoveRender(Entity* entity);
   
 };
 
 #endif
 
-/*Property detail
- camera	property
- public var camera:Point
- Point used to determine drawing offset in the render loop.
- 
- count	property	 
- count:uint  [read-only]
- How many Entities are in the World.
- 
- Implementation 
- public function get count():uint 
+/*
  farthest	property	 
  farthest:Entity  [read-only]
  The Entity that will be rendered first by the World.
@@ -96,18 +110,6 @@ private:
  X position of the mouse in the World.
  
  Implementation 
- public function get mouseX():int 
- mouseY	property	 
- mouseY:int  [read-only]
- Y position of the mouse in the world.
- 
- Implementation 
- public function get mouseY():int 
- nearest	property	 
- nearest:Entity  [read-only]
- The Entity that will be rendered last by the world.
- 
- Implementation 
  public function get nearest():Entity 
  uniqueTypes	property	 
  uniqueTypes:uint  [read-only]
@@ -119,20 +121,6 @@ private:
  public var visible:Boolean = true
  If the render() loop is performed.
  
- Constructor detail
- World	()	constructor
- public function World()
- Constructor.
- 
- Method detail
- add	()	method
- public function add(e:Entity):Entity
- Adds the Entity to the World at the end of the frame.
- 
- Parameters
- e:Entity — Entity object you want to add.
- Returns
- Entity — The added Entity object.
  addGraphic	()	method	 
  public function addGraphic(graphic:Graphic, layer:int = 0, x:int = 0, y:int = 0):Entity
  Adds an Entity to the World with the Graphic object.

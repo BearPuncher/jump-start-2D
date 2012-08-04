@@ -95,9 +95,12 @@ Image::Image(SDL_Surface* image_surface, SDL_Rect* clip_rect):Graphic() {
 
   origin_x_ = 0;
   origin_y_ = 0;
+  
+  visible_ = true;
 }
 
 void Image::Render(Point point, Camera camera) {
+  
   //If not visible, dont render
   if (!visible_) {
     return;

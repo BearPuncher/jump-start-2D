@@ -3,27 +3,24 @@
 #include "graphic.h"
 #include "image.h"
 #include <SDL/SDL_opengl.h>
+#include <assert.h>
+
 
 World::World() {
   camera_.position = Point(0,0);
   camera_.rotation = 0;
   
   count_ = 0;
+  visible_ = true;
 }
 
 World::~World() {
   
 }
 
-void World::Begin() {
-  Add(new Entity(Point(10,10), new Image("./assets/heart.png")));
-  UpdateLists();
-}
+void World::Begin() {}
 
-void World::End() {
-  
-}
-
+void World::End() {}
 
 void World::UpdateLists() {
   //Remove
@@ -32,12 +29,16 @@ void World::UpdateLists() {
   while (!to_add_.empty()) {
     Entity* e = to_add_.front();
     to_add_.pop();
+    
+    if (e->GetWorld() != NULL) continue;
+    
     AddUpdate(e);
     AddRender(e);
     
-    //addtype
-    //addname
+    if (e->GetCollisionType() != "") AddCollisionType(e);
+    //if (e._name) registerName(e);
     
+    e->SetWorld(this);
     e->Added();
   }
 }
@@ -58,10 +59,12 @@ void World::Update() {
 }
 
 void World::Render() {
+  if (!visible_) return;
   glRotatef(camera_.rotation, 0.0f, 0.0, 1.0f);
   glTranslatef(camera_.position.x, camera_.position.y, 0);
   
   glPushMatrix();
+  
   if (!render_list_.empty()) {
     std::list<Entity*>::iterator it;
     
@@ -72,9 +75,7 @@ void World::Render() {
       }
     }
   }
-  
   glPopMatrix();
-  
 }
 
 void World::Add(Entity* entity) {
@@ -86,26 +87,35 @@ void World::Remove(Entity* entity) {
 }
 
 void World::RemoveAll() {
-  
+  //TODO
+}
+
+void World::AddCollisionType(Entity* entity) {
+  //TODO
 }
 
 void World::AddUpdate(Entity* entity) {
+  if (entity == NULL) return;
   update_list_.push_back(entity);
   count_++;
-  
+  assert(!update_list_.empty());
   //if (!_classCount[e._class]) _classCount[e._class] = 0;
   //_classCount[e._class] ++;
 }
 
 void World::RemoveUpdate(Entity* entity) {
+  if (entity == NULL) return;
   update_list_.remove(entity);
   count_--;
 }
 
 void World::AddRender(Entity* entity) {
+  if (entity == NULL) return;
   render_list_.push_back(entity);
+  assert(!render_list_.empty());
 }
 
 void World::RemoveRender(Entity* entity) {
+  if (entity == NULL) return;
   render_list_.remove(entity);
 }

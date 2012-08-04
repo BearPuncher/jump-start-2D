@@ -9,15 +9,25 @@ Entity::Entity() {
   
   layer_ = 0;
   
-  visible = false;
+  visible_ = true;
   
   graphic_ = NULL;
   world_ = NULL;
+  
+  collision_type_ = "";
 }
 
 Entity::Entity(Point position, Graphic* graphic) {
   position_ = position;
   graphic_ = graphic;
+  
+  layer_ = 0;
+  
+  visible_ = true;
+  
+  world_ = NULL;
+  
+  collision_type_ = "";
 }
 
 Entity::~Entity() {

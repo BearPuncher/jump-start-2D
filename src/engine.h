@@ -46,7 +46,7 @@ public:
   };
   
   //Set window name to string "name"
-  void SetWindowName(std::string name);
+  void SetWindowName(const char*);
   //
   void ResizeWindow(int width, int height);
   //Easily toggle between full screen

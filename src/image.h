@@ -143,38 +143,3 @@ private:
 };
 
 #endif
-
-
-
-/*
- smooth	property
- public var smooth:Boolean
- If the image should be drawn transformed with pixel smoothing. This will affect drawing performance, but look less pixelly.
-
-
- Implementation
- public function get width():uint
- Constructor detail
- Image	()	constructor
- public function Image(source:*, clipRect:Rectangle = null)
- Constructor.
-
- clipRect:Rectangle (default = null) — Optional rectangle defining area of the source image to draw.
-
-
- createCircle	()	method
- public static function createCircle(radius:uint, color:uint = 0xFFFFFF, alpha:Number = 1):Image
- Creates a new circle Image.
-
- Parameters
- radius:uint — Radius of the circle.
-
- color:uint (default = 0xFFFFFF) — Color of the circle.
-
- alpha:Number (default = 1) — Alpha of the circle.
- Returns
- Image — A new Image object.
- createRect	()	method
- public static function createRect(width:uint, height:uint, color:uint = 0xFFFFFF, alpha:Number = 1):Image
- Creates a new rectangle Image.
- */

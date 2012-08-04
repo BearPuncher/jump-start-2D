@@ -13,7 +13,6 @@ public:
   // Call this before any other methods
   void ReadInput();
   
-  
   inline bool* GetInput()
   {
     return key_held_;
