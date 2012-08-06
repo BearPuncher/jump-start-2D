@@ -1,4 +1,5 @@
-#include <SDL/SDL_opengl.h>
+#include "SDL/SDL_opengl.h"
+
 #include "globals.h"
 #include "engine.h"
 #include "world.h"
@@ -6,8 +7,9 @@
 #include "image.h"
 
 //Default Constructor
-Engine::Engine() {
+Engine::Engine() : timer() {
   JS.SetDimensions(640, 480);
+  JS.SetBounds(new Rectangle(Point(0,0), 640, 480));
   bits_per_pixel_ = 32;
   
   window_name_ = "";
@@ -23,16 +25,19 @@ Engine::Engine() {
   
   full_screen_ = false;
   
-  game_status_ = GAME_RUNNING;
+  old_time_ = current_time_ = accumulator_ = fps_ = fps_count_ = 0;
   
+  game_status_ = GAME_RUNNING;
 }
 
 Engine::Engine(int screen_width, int screen_height,
                std::string window_name,
                bool full_screen,
                int frame_rate,
-               bool fixed_frame_rate) {
+               bool fixed_frame_rate) : timer()  {
   JS.SetDimensions(screen_width, screen_height);
+  JS.SetBounds(new Rectangle(Point(0,0), 640, 480));
+  
   bits_per_pixel_ = 32;
   
   window_name_ = window_name;
@@ -48,8 +53,9 @@ Engine::Engine(int screen_width, int screen_height,
   
   full_screen_ = full_screen;
   
-  game_status_ = GAME_RUNNING;
+   old_time_ = current_time_ = accumulator_ = fps_ = fps_count_ = 0;
   
+  game_status_ = GAME_RUNNING;
 }
 
 Engine::~Engine() {
@@ -130,23 +136,30 @@ bool Engine::Init() {
   
   glLoadIdentity();
   
+  //Globals setup
+  JS.SetFrameRate(frame_rate_);
   JS.SetWorld(new World());
   JS.CheckWorld();
+  timer.Start();
   
   return true;
 };
 
-
 void Engine::Run() {
-
-  /* Render and logic code */
-  Update();
-  Render();
   
-  SDL_GL_SwapBuffers();
+  bool run_loop = UpdateTimer();
   
-  if (input.KeyPressed(SDLK_ESCAPE) || input.WindowClosed()) {
-    game_status_ = GAME_OVER;
+  if (run_loop) { 
+    
+    UpdateFPS();
+    
+    
+    Update();
+    Render();
+    
+    if (input.KeyPressed(SDLK_ESCAPE) || input.WindowClosed()) {
+      game_status_ = GAME_OVER;
+    }
   }
 }
 
@@ -182,6 +195,8 @@ void Engine::Render() {
   glPopMatrix();
   
   glPopMatrix();
+  
+  SDL_GL_SwapBuffers();
 }
 
 void Engine::SetWindowName(const char* name) {
@@ -218,5 +233,43 @@ void Engine::ToggleFullscreen() {
     SDL_ShowCursor(SDL_DISABLE);
   }
 };
+
+
+bool Engine::UpdateTimer() {
+  bool time_step = true;
+  
+  
+  //Variable or fixed time step
+  if (fixed_frame_rate_) {
+    old_time_ = current_time_;
+    current_time_ = (double)timer.GetTicks();
+    accumulator_ += (double)(current_time_ - old_time_) / 1000.0f;
+    double frame_rate_cap = 1000.0f / (double)frame_rate_ / 1000.0f;
+    if (accumulator_ >= frame_rate_cap) {
+      accumulator_ -= frame_rate_cap;
+      JS.SetElapsedTime(frame_rate_cap);
+    } else {
+      time_step = false;
+    }
+  } else {
+    old_time_ = current_time_;
+    current_time_ = (double)timer.GetTicks();
+    int elapsed_ticks = current_time_ - old_time_;
+    JS.SetElapsedTime((double)(elapsed_ticks) / 1000.0f);
+  }
+  
+  return time_step;
+}
+
+void Engine::UpdateFPS() {
+  fps_count_ += JS.GetElapsedTime();
+  fps_++;
+  //If greater than or equal to 1 second
+  if (fps_count_ >= 1) {
+    fprintf(stderr, "%d\r", fps_);
+    fps_ = 0;
+    fps_count_ -= 1;
+  }
+}
 
 

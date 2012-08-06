@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 	//B2_NOT_USED(argv);
 
   /* Initialise game */
-  Engine engine(800, 640, "My Game", false);
+  Engine engine(800, 640, "My Game", false, 60, true);
   engine.Init();
 
   /* Start game loop */

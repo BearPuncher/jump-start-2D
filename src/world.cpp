@@ -1,10 +1,10 @@
+#include <assert.h>
+
 #include "world.h"
 #include "entity.h"
 #include "graphic.h"
 #include "image.h"
-#include <SDL/SDL_opengl.h>
-#include <assert.h>
-
+#include "SDL/SDL_opengl.h"
 
 World::World() {
   camera_.position = Point(0,0);

@@ -1,5 +1,5 @@
-#ifndef SPRITEMAP_H
-#define SPRITEMAP_H
+#ifndef JS_SPRITEMAP_H
+#define JS_SPRITEMAP_H
 
 #include "image.h"
 

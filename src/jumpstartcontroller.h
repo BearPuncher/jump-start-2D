@@ -5,8 +5,6 @@
 #include "geometry.h"
 #include "draw.h"
 
-using namespace geometry;
-using namespace draw;
 //JS is a public external class that tracks some global application variables
 
 class World;
@@ -16,13 +14,13 @@ public:
   JumpStartController();
   
   //Camera functions
-  inline Camera GetCamera() {
+  inline draw::Camera GetCamera() {
     return camera_;
   };
   
   void SetCameraOrigin();
   
-  void SetCameraPosition(Point position);
+  void SetCameraPosition(geometry::Point position);
   
   void SetCameraRotation(float degrees);
   
@@ -53,16 +51,42 @@ public:
   //Update to new world if next_world_ is set
   void CheckWorld();
   
-protected:
+  void SetBounds(geometry::Rectangle* bounds) {
+    bounds_ = bounds;
+  };
+  
+  geometry::Rectangle* GetBounds() {
+    return bounds_;
+  };
+  
+  inline double GetElapsedTime() {
+    return elapsed;
+  };
 
+  inline void SetElapsedTime(double elapsed_) {
+    elapsed = elapsed_;
+  };
+  
+  inline double Timedt() {
+    return (double)expected_frame_rate_ * elapsed;
+  };
+  
+  inline void SetFrameRate(int frame_rate) {
+    expected_frame_rate_ = frame_rate;
+  };
+  
+private:
   int screen_width_;
   int screen_height_;
-
+  
   World* world_;
   World* next_world_;
   
-  Camera camera_;
-private:
+  draw::Camera camera_;
+  geometry::Rectangle* bounds_;
+  
+  int expected_frame_rate_;
+  double elapsed;
 };
 
 

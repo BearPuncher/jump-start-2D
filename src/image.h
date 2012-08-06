@@ -1,10 +1,10 @@
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef JS_IMAGE_H
+#define JS_IMAGE_H
 
 #include "globals.h"
 #include "graphic.h"
 
-#include <SDL/SDL_opengl.h>
+#include "SDL/SDL_opengl.h"
 
 #include <string>
 #include <map>

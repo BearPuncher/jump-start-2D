@@ -1,5 +1,5 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef JS_ENTITY_H
+#define JS_ENTITY_H
 
 #include <string>
 #include "geometry.h"

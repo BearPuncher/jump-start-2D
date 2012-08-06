@@ -1,5 +1,5 @@
-#ifndef GEOMETRY_H
-#define GEOMETRY_H
+#ifndef JS_GEOMETRY_H
+#define JS_GEOMETRY_H
 
 #include <climits>
 #include <cmath>

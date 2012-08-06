@@ -1,19 +1,16 @@
-#ifndef GRAPHIC_H
-#define GRAPHIC_H
+#ifndef JS_GRAPHIC_H
+#define JS_GRAPHIC_H
 
-#include <SDL/SDL_image.h>
+#include "SDL/SDL_image.h"
 #include "geometry.h"
 #include "draw.h"
-
-using namespace geometry;
-using namespace draw;
 
 class Graphic {
 public:
   Graphic();
   virtual ~Graphic();
 
-  virtual void Render(Point point, Camera camera) {};
+  virtual void Render(geometry::Point point, draw::Camera camera) {};
   virtual void Update() {};
 
   //Setters

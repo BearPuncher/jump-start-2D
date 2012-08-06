@@ -34,13 +34,9 @@ Entity::~Entity() {
   delete graphic_;
 };
 
-void Entity::Added() {
-  
-}
+void Entity::Added() {}
 
-void Entity::Update() {
-
-}
+void Entity::Update() {}
 
 void Entity::Render() {
   if (graphic_ != NULL && graphic_->IsVisible()) {

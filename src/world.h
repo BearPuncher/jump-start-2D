@@ -1,8 +1,9 @@
-#ifndef WORLD_H
-#define WORLD_H
+#ifndef JS_WORLD_H
+#define JS_WORLD_H
 
 #include <list>
 #include <queue>
+
 #include "globals.h"
 #include "geometry.h"
 #include "draw.h"

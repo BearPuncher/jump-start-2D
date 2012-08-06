@@ -1,5 +1,5 @@
-#ifndef DRAW_H
-#define DRAW_H
+#ifndef JS_DRAW_H
+#define JS_DRAW_H
 
 #include "geometry.h"
 using namespace geometry;

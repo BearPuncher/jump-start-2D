@@ -11,14 +11,16 @@ JumpStartController::JumpStartController() {
   
   world_ = NULL;
   next_world_ = NULL;
+  bounds_ = NULL;
+  
+  //Default to 60
+  expected_frame_rate_ = 60;
+  elapsed = 0;
 }
 
 void JumpStartController::SetCameraOrigin() {
   camera_.position = Point(0,0);
   camera_.rotation = 0;
-  
-  world_ = NULL;
-  next_world_ = NULL;
 }
 
 void JumpStartController::SetCameraPosition(Point position) {

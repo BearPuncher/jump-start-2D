@@ -1,5 +1,5 @@
-#ifndef GLOBALS_H
-#define GLOBALS_H
+#ifndef JS_GLOBALS_H
+#define JS_GLOBALS_H
 
 #include "input.h"
 #include "jumpstartcontroller.h"

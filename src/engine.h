@@ -1,8 +1,9 @@
-#ifndef ENGINE_H
-#define ENGINE_H
+#ifndef JS_ENGINE_H
+#define JS_ENGINE_H
 
 #include <string>
-#include <SDL/SDL.h>
+#include "SDL/SDL.h"
+#include "timer.h"
 
 /*
  Engine
@@ -34,7 +35,7 @@ public:
               bool fixed_frame_rate = false);
   virtual ~Engine();
   
-  virtual bool Init();
+  bool Init();
   
   void Run();
   virtual void Render();
@@ -56,8 +57,20 @@ public:
     return (game_status_ == GAME_RUNNING);
   };
   
+private:
+  //Returns TRUE on game loop, FALSE if wait
+  bool UpdateTimer();
+  void UpdateFPS();
+  
+  Timer timer;
+  Uint32 old_time_;
+  Uint32 current_time_;
+  double accumulator_;
+  int fps_;
+  double fps_count_;
+  
+  
 protected:
-
   int bits_per_pixel_;
   bool full_screen_;
   std::string window_name_;
