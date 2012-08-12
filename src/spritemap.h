@@ -12,11 +12,10 @@ public:
   virtual ~Spritemap();
   Spritemap(const char * filename, int frame_width = 0, int frame_height = 0);
   
-  //void Render(Point p);
-  virtual void Update();
+  void Update();
   
-  void Add(std::string name, int* frames, int frame_count, float frame_rate = 0, bool loop = true);
-  void Play(std::string name, bool reset = false, int frame = 0);
+  void Add(const char* name, int* frames, int frame_count, float frame_rate = 0, bool loop = true);
+  void Play(const char* name, bool reset = false, int frame = 0);
   
   
   void GetColumns();

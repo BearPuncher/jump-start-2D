@@ -3,15 +3,16 @@
 
 #include "globals.h"
 #include "engine.h"
+#include "Box2D/Box2D.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
-  //B2_NOT_USED(argc);
-	//B2_NOT_USED(argv);
+  B2_NOT_USED(argc);
+	B2_NOT_USED(argv);
 
   /* Initialise game */
-  Engine engine(800, 640, "My Game", false, 60, true);
+  Engine engine(800, 640, "My Game", false, 60, false);
   engine.Init();
 
   /* Start game loop */

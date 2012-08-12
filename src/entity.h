@@ -15,6 +15,7 @@ public:
 
   //Overridable functions
   virtual void Added();
+  virtual void Removed();
   virtual void Update();
   virtual void Render();
   
@@ -51,6 +52,8 @@ public:
   inline std::string GetCollisionType() {
     return collision_type_;
   };
+  
+  bool OnCamera();
   
 protected:
   Graphic* graphic_;

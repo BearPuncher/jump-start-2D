@@ -1,15 +1,13 @@
 #ifndef JS_WORLD_H
 #define JS_WORLD_H
 
+#include <map>
 #include <list>
-#include <queue>
+#include <deque>
 
 #include "globals.h"
 #include "geometry.h"
 #include "draw.h"
-
-using namespace geometry;
-using namespace draw;
 
 class Entity;
 
@@ -28,8 +26,14 @@ public:
   void Remove(Entity* entity);
   void RemoveAll();
   
+  /* Lesser used memebers */
+  void AddUpdate(Entity* entity);
+  void RemoveUpdate(Entity* entity);
+  void AddRender(Entity* entity);
+  void RemoveRender(Entity* entity);
+  
   //Get Current world camera
-  inline Camera GetCamera() {
+  inline draw::Camera GetCamera() {
     return camera_;
   };
   
@@ -40,6 +44,8 @@ public:
                   camera_.position.y + mouse_position.y));
   };
   
+  
+  
   inline int GetCount() {
     return count_;
   };
@@ -49,29 +55,28 @@ public:
   };
   
 protected:
-  void AddUpdate(Entity* entity);
-  void RemoveUpdate(Entity* entity);
-  void AddRender(Entity* entity);
-  void RemoveRender(Entity* entity);
   
-  void AddCollisionType(Entity* entity);
+  typedef std::list< Entity* > EntityList;
   
-  Camera camera_;
+  void AddType(Entity* entity);
   
-  std::queue< Entity* > to_add_;
-  std::queue< Entity* > to_remove_;
+  draw::Camera camera_;
+  
+  std::deque< Entity* > to_add_;
+  std::deque< Entity* > to_remove_;
   
   std::list< Entity* > update_list_;
-  std::list< Entity* > render_list_;
+  //A map of layers to lists of enities
+  std::map< int, EntityList*> render_map_;
+  
   int count_;
   bool visible_;
-  
-  Entity* e1;
-  Entity* e2;
   
 private:
   
 };
+
+//Map or priority queue
 
 #endif
 

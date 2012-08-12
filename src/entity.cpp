@@ -3,6 +3,8 @@
 #include "world.h"
 #include "graphic.h"
 
+using namespace draw;
+
 Entity::Entity() {
   position_.x = 0;
   position_.y = 0;
@@ -32,9 +34,11 @@ Entity::Entity(Point position, Graphic* graphic) {
 
 Entity::~Entity() {
   delete graphic_;
-};
+}
 
 void Entity::Added() {}
+
+void Entity::Removed() {}
 
 void Entity::Update() {}
 
@@ -55,5 +59,18 @@ void Entity::Render() {
 }
 
 void Entity::SetLayer(int layer) {
+  if (layer_ == layer) return;
+  if (world_ == NULL) {
+    layer_ = layer;
+    return;
+  }
+  
+  world_->RemoveRender(this);
   layer_ = layer;
-};
+  world_->AddRender(this);
+}
+
+bool Entity::OnCamera() {
+  //TODO
+  return false;
+}

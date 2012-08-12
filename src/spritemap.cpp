@@ -72,13 +72,13 @@ void Spritemap::Update() {
   }
 }
 
-void Spritemap::Add(std::string name, int frames[], int frame_count, float frame_rate, bool loop) {
+void Spritemap::Add(const char* name, int frames[], int frame_count, float frame_rate, bool loop) {
   animation_map_[name] =  new Animation(name, frames, frame_count, frame_rate, loop);
 }
 
-void Spritemap::Play(std::string name, bool reset, int frame) {
-  
-  if (!reset && current_animation_ && current_animation_->name == name) {
+void Spritemap::Play(const char* name, bool reset, int frame) {
+  //Mus test this change
+  if (!reset && current_animation_ && current_animation_->name.compare(name) == 0) {
     return; 
   }
   current_animation_ = animation_map_[name];
@@ -116,8 +116,6 @@ void Spritemap::DrawTexture(Point p) {
   
   int current_col = (frame_ % columns_);
   int current_row = int(frame_ / columns_);
-  
-  //std::cerr << current_col << " " << current_row << std::endl;
   
   glBegin( GL_QUADS );
   //Draw flipped   //row * frame_width_/image_surface_->w

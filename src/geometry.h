@@ -11,8 +11,7 @@ namespace geometry {
 	const double PI = 3.14159265;
 
   //Point definition
-	struct Point
-	{
+	struct Point {
 		double	x;
 		double	y;
 		Point(int _x = 0, int _y = 0) : x(_x), y(_y) {}
@@ -83,7 +82,7 @@ namespace geometry {
 
 	//Check if a point lies in a polygon
 	static inline bool pointInPolygon(Shape shape, Point p) {
-		if (shape.empty()){
+		if (shape.empty()) {
 			return false;
 		}
 
@@ -91,14 +90,11 @@ namespace geometry {
 		unsigned int j = shape.size() - 1;
 		bool oddnodes = false;
 
-		for(i = 0; i < shape.size(); i++)
-		{
+		for(i = 0; i < shape.size(); i++) {
 			if((shape[i].y < p.y && shape[j].y >= p.y)
-				|| (shape[j].y < p.y && shape[i].y >= p.y))
-				{
+				|| (shape[j].y < p.y && shape[i].y >= p.y)) {
 					if(shape[i].x + (p.y - shape[i].y) /
-						(shape[j].y - shape[i].y)*(shape[j].x - shape[i].x) < p.x)
-          {
+						(shape[j].y - shape[i].y)*(shape[j].x - shape[i].x) < p.x) {
 						oddnodes = !oddnodes;
 					}
 			}
@@ -109,27 +105,23 @@ namespace geometry {
 	}
 
 	//Check if a point lies in a circle
-	static inline bool pointInCircle(Point centre, double radius, Point p)
-	{
+	static inline bool pointInCircle(Point centre, double radius, Point p) {
 		return straightLineDistance(centre, p) <= radius;
 	}
 
   //Round function
-	static inline int round(const double x)
-	{
+	static inline int round(const double x) {
 		return (int)(x + 0.5);
 	}
 
   //Next power of two
-	static inline int nextPowerofTwo(const int x)
-	{
+	static inline int nextPowerofTwo(const int x) {
 		double logbase2 = log((double)x) / log((double)2);
 		return round(pow(2,ceil(logbase2)));
 	}
 
   //Get point from polar
-	static inline Point fromPolar(const Point centre, const double length, const double angle)
-	{
+	static inline Point fromPolar(const Point centre, const double length, const double angle) {
 		double xc = length * cos(angle) + centre.x;
 		double yc = length * sin(angle) + centre.y;
 		Point newpoint;
@@ -139,14 +131,12 @@ namespace geometry {
 	}
 
   //Degrees to radians conversion
-	static inline double toRadian(const double degree)
-	{
+	static inline double toRadian(const double degree) {
 		return ((degree)/180*PI);
 	}
 
   //Returns dot product of two vectors
-	static inline double dotProduct( Vector& a, Vector& b)
-	{
+	static inline double dotProduct( Vector& a, Vector& b) {
 		return ((a.x() * b.x()) + (a.y() * b.y()));
 	}
 
@@ -157,8 +147,7 @@ namespace geometry {
   Returns -1 if negative
   Returns 0 if zero
 	*/
-	static inline int getSign(double num)
-	{
+	static inline int getSign(double num) {
 		if (num > 0 ) return 1;
 		else if (num == 0) return 0;
 		else return -1;
