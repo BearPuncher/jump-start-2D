@@ -29,6 +29,49 @@ void World::Begin() {}
 
 void World::End() {}
 
+void World::Update() {
+  if (!update_list_.empty()) {
+    std::list<Entity*>::iterator it;
+    
+    for (it = update_list_.begin(); it != update_list_.end(); it++ ) {
+      Entity* e = (*it);
+      e->Update();
+      Graphic* g = e->GetGraphic();
+      if (g != NULL && g->IsActive()) {
+        g->Update();
+      }
+    }
+  }
+}
+
+void World::Render() {
+  if (!visible_) return;
+  glRotatef(camera_.rotation, 0.0f, 0.0, 1.0f);
+  glTranslatef(camera_.position.x, camera_.position.y, 0);
+  
+  glPushMatrix();
+  
+  if (!render_map_.empty()) {
+    //Map of layers to entities, render code needs testing
+    //Want c++11
+    std::map< int, EntityList* >::iterator it;
+    for (it = render_map_.begin(); it != render_map_.end(); it++ ) {
+      EntityList* elist = (*it).second;
+      if (elist == NULL) continue;
+      
+      EntityList::iterator it_list;
+      for (it_list = elist->begin(); it_list != elist->end(); it_list++ ) {
+        Entity* e = (*it_list);
+        if (e->IsVisible()) {
+          e->Render();
+        }
+      }
+    }
+  }
+  
+  glPopMatrix();
+}
+
 void World::UpdateLists() {
   
   Entity* entity;
@@ -71,49 +114,6 @@ void World::UpdateLists() {
     entity->SetWorld(this);
     entity->Added();
   }
-}
-
-void World::Update() {
-  if (!update_list_.empty()) {
-    std::list<Entity*>::iterator it;
-    
-    for (it = update_list_.begin(); it != update_list_.end(); it++ ) {
-      Entity* e = (*it);
-      e->Update();
-      Graphic* g = e->GetGraphic();
-      if (g != NULL && g->IsActive()) {
-        g->Update();
-      }
-    }
-  }
-}
-
-void World::Render() {
-  if (!visible_) return;
-  glRotatef(camera_.rotation, 0.0f, 0.0, 1.0f);
-  glTranslatef(camera_.position.x, camera_.position.y, 0);
-  
-  glPushMatrix();
-  
-  if (!render_map_.empty()) {
-    //Map of layers to entities, render code needs testing
-    //Want c++11
-    std::map< int, EntityList* >::iterator it;
-    for (it = render_map_.begin(); it != render_map_.end(); it++ ) {
-      EntityList* elist = (*it).second;
-      if (elist == NULL) continue;
-      
-      EntityList::iterator it_list;
-      for (it_list = elist->begin(); it_list != elist->end(); it_list++ ) {
-        Entity* e = (*it_list);
-        if (e->IsVisible()) {
-          e->Render();
-        }
-      }
-    }
-  }
-  
-  glPopMatrix();
 }
 
 void World::Add(Entity* entity) {

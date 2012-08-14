@@ -16,11 +16,13 @@ public:
   World();
   ~World();
   
-  void Begin();
-  void End();
-  void Update();
+  virtual void Begin();
+  virtual void End();
+  virtual void Update();
+  virtual void Render();
+  
+  //Adds and Removes
   void UpdateLists();
-  void Render();
   
   void Add(Entity* entity);
   void Remove(Entity* entity);

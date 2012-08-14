@@ -150,9 +150,7 @@ void Engine::Run() {
   bool run_loop = UpdateTimer();
   
   if (run_loop) { 
-    
     UpdateFPS();
-    
     
     Update();
     Render();
@@ -237,7 +235,6 @@ void Engine::ToggleFullscreen() {
 
 bool Engine::UpdateTimer() {
   bool time_step = true;
-  
   
   //Variable or fixed time step
   if (fixed_frame_rate_) {

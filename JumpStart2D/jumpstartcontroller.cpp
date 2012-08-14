@@ -38,7 +38,9 @@ void JumpStartController::RenderCamera() {
 
 void JumpStartController::CheckWorld() {
   if (next_world_ == NULL) return;
-  world_->End();
+  if (world_ != NULL) {
+    world_->End();
+  }
   world_ = next_world_;
   next_world_ = NULL;
   world_->Begin();
