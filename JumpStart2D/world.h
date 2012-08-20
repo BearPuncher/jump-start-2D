@@ -46,17 +46,32 @@ public:
                   camera_.position.y + mouse_position.y));
   };
   
-  inline int LayerCount() {
-    return layer_count_;
+  //inline int GetLayer(int layer, Container c );
+  
+  inline int LayerCount(int layer) {
+    if (render_map_[layer] == NULL) return 0;
+    return render_map_[layer]->size();
+  };
+  
+  inline Entity* LayerFirst(int layer) {
+    if (render_map_[layer] == NULL) return NULL;
+    return render_map_[layer]->front();
+  };
+  
+  inline Entity* LayerLast(int layer) {
+    if (render_map_[layer] == NULL) return NULL;
+    return render_map_[layer]->back();
   };
   
   inline int NearestLayer() {
+    if (render_map_.empty()) return 0;
     return (*render_map_.end()).first;
-  }
+  };
   
   inline int FarthestLayer() {
+    if (render_map_.empty()) return 0;
     return (*render_map_.begin()).first;
-  }
+  };
   
   inline int GetCount() {
     return count_;
@@ -65,6 +80,12 @@ public:
   inline bool IsVisible() {
     return visible_;
   };
+  
+  bool BringForward(Entity* entity);
+  bool SendBackward(Entity* entity);
+  
+  bool BringToFront(Entity* entity);
+  bool SendToBack(Entity* entity);
   
 protected:
   
@@ -149,14 +170,6 @@ private:
  y:int (default = 0) — Y position of the Entity.
  Returns
  Entity — The Entity that was added.
- 
- bringForward	()	method	 
- public function bringForward(e:Entity):Boolean
- Shifts the Entity one place towards the front of its contained layer.
- Parameters
- e:Entity — The Entity to shift.
- Returns
- Boolean — If the Entity changed position.
  
  bringToFront	()	method	 
  public function bringToFront(e:Entity):Boolean
@@ -291,116 +304,73 @@ private:
  Pushes all Entities in the World on the layer into the Array or Vector.
  Parameters
  layer:int — The layer to check.
- 
  into:Object — The Array or Vector to populate.
+ 
  getType	()	method	 
  public function getType(type:String, into:Object):void
  Pushes all Entities in the World of the type into the Array or Vector.
- 
  Parameters
  type:String — The type to check.
- 
  into:Object — The Array or Vector to populate.
+ 
  isAtBack	()	method	 
  public function isAtBack(e:Entity):Boolean
  If the Entity as at the back of its layer.
- 
  Parameters
  e:Entity — The Entity to check.
  Returns
  Boolean — True or false.
+ 
  isAtFront	()	method	 
  public function isAtFront(e:Entity):Boolean
  If the Entity as at the front of its layer.
- 
  Parameters
  e:Entity — The Entity to check.
  Returns
  Boolean — True or false.
- layerCount	()	method	 
- public function layerCount(layer:int):uint
- Returns the amount of Entities are on the layer in the World.
- 
- Parameters
- layer:int — The layer to count Entities on.
- Returns
- uint — How many Entities are on the layer.
- layerFirst	()	method	 
- public function layerFirst(layer:int):Entity
- The first Entity on the Layer.
- 
- Parameters
- layer:int — The layer to check.
- Returns
- Entity — The Entity.
- layerLast	()	method	 
- public function layerLast(layer:int):Entity
- The last Entity on the Layer.
- 
- Parameters
- layer:int — The layer to check.
- Returns
- Entity — The Entity.
+  
  nearestToEntity	()	method	 
  public function nearestToEntity(type:String, e:Entity, useHitboxes:Boolean = false):Entity
  Finds the Entity nearest to another.
- 
  Parameters
  type:String — The Entity type to check for.
- 
  e:Entity — The Entity to find the nearest to.
- 
  useHitboxes:Boolean (default = false) — If the Entities' hitboxes should be used to determine the distance. If false, their x/y coordinates are used.
  Returns
  Entity — The nearest Entity to e.
+ 
  nearestToPoint	()	method	 
  public function nearestToPoint(type:String, x:Number, y:Number, useHitboxes:Boolean = false):Entity
  Finds the Entity nearest to the position.
- 
  Parameters
  type:String — The Entity type to check for.
- 
  x:Number — X position.
- 
  y:Number — Y position.
- 
  useHitboxes:Boolean (default = false) — If the Entities' hitboxes should be used to determine the distance. If false, their x/y coordinates are used.
  Returns
  Entity — The nearest Entity to the position.
+ 
  nearestToRect	()	method	 
  public function nearestToRect(type:String, x:Number, y:Number, width:Number, height:Number, ignore:Entity = null):Entity
  Finds the Entity nearest to the rectangle.
- 
  Parameters
  type:String — The Entity type to check for.
- 
  x:Number — X position of the rectangle.
- 
  y:Number — Y position of the rectangle.
- 
  width:Number — Width of the rectangle.
- 
  height:Number — Height of the rectangle.
- 
  ignore:Entity (default = null) — Ignore this entity.
  Returns
  Entity — The nearest Entity to the rectangle.
+ 
  recycle	()	method	 
  public function recycle(e:Entity):Entity
  Removes the Entity from the World at the end of the frame and recycles it. The recycled Entity can then be fetched again by calling the create() function.
- 
  Parameters
  e:Entity — The Entity to recycle.
  Returns
  Entity — The recycled Entity.
- remove	()	method	 
- public function remove(e:Entity):Entity
- Removes the Entity from the World at the end of the frame.
  
- Parameters
- e:Entity — Entity object you want to remove.
- Returns
- Entity — The removed Entity object.
  removeAll	()	method	 
  public function removeAll():void
  Removes all Entities from the World at the end of the frame.
@@ -408,37 +378,26 @@ private:
  removeList	()	method	 
  public function removeList(... list):void
  Removes multiple Entities from the world.
- 
  Parameters
  ... list — Several Entities (as arguments) or an Array/Vector of Entities.
- render	()	method	 
- public function render():void
- Performed by the game loop, renders all contained Entities. If you override this to give your World render code, remember to call super.render() or your Entities will not be rendered.
+
  
- sendBackward	()	method	 
- public function sendBackward(e:Entity):Boolean
- Shifts the Entity one place towards the back of its contained layer.
- 
- Parameters
- e:Entity — The Entity to shift.
- Returns
- Boolean — If the Entity changed position.
  sendToBack	()	method	 
  public function sendToBack(e:Entity):Boolean
  Sends the Entity to the back of its contained layer.
- 
  Parameters
  e:Entity — The Entity to shift.
  Returns
  Boolean — If the Entity changed position.
+ 
  typeCount	()	method	 
  public function typeCount(type:String):uint
  Returns the amount of Entities of the type are in the World.
- 
  Parameters
  type:String — The type (or Class type) to count.
  Returns
  uint — How many Entities of type exist in the World.
+ 
  typeFirst	()	method	 
  public function typeFirst(type:String):Entity
  The first Entity of the type.
@@ -447,12 +406,5 @@ private:
  type:String — The type to check.
  Returns
  Entity — The Entity.
- update	()	method	 
- public override function update():void
- Performed by the game loop, updates all contained Entities. If you override this to give your World update code, remember to call super.update() or your Entities will not be updated.
- 
- updateLists	()	method	 
- public function updateLists():void
- Updates the add/remove lists at the end of the frame.
- 
+  
 */

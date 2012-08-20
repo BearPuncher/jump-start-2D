@@ -52,8 +52,7 @@ void World::Render() {
   glPushMatrix();
   
   if (!render_map_.empty()) {
-    //Map of layers to entities, render code needs testing
-    //Want c++11
+    //Larger layer, higher priority
     std::map< int, EntityList* >::iterator it;
     for (it = render_map_.begin(); it != render_map_.end(); it++ ) {
       EntityList* elist = (*it).second;
@@ -125,7 +124,14 @@ void World::Remove(Entity* entity) {
 }
 
 void World::RemoveAll() {
-  //TODO
+  if (!update_list_.empty()) {
+    std::list<Entity*>::iterator it;
+    
+    for (it = update_list_.begin(); it != update_list_.end(); it++ ) {
+      Entity* e = (*it);
+      to_remove_.push_back(e);
+    }
+  }
 }
 
 void World::AddType(Entity* entity) {
@@ -170,4 +176,48 @@ void World::RemoveRender(Entity* entity) {
     render_map_.erase(layer);
     --layer_count_;
   }
+}
+
+bool World::BringForward(Entity* entity) {
+  int layer = entity->GetLayer();
+  if (render_map_[layer]->size() < 2) return false;
+  std::list<Entity*>::iterator it = std::find(render_map_[layer]->begin(), render_map_[layer]->end(), entity);
+  if ((*it) == render_map_[layer]->back()) return false;
+  std::list<Entity*>::iterator it_next = it;
+  it_next++;
+  if ((*it_next) == NULL) return false;
+  std::iter_swap(it, it_next);
+  return true;
+}
+
+bool World::SendBackward(Entity* entity) {
+  int layer = entity->GetLayer();
+  if (render_map_[layer]->size() < 2) return false;
+  std::list<Entity*>::reverse_iterator it = std::find(render_map_[layer]->rbegin(), render_map_[layer]->rend(), entity);
+  if ((*it) == render_map_[layer]->front()) return false;
+  std::list<Entity*>::reverse_iterator it_next = it;
+  it_next++;
+  if ((*it_next) == NULL) return false;
+  std::iter_swap(it, it_next);
+  return true;
+}
+
+bool World::BringToFront(Entity* entity) {
+  int layer = entity->GetLayer();
+  if (render_map_[layer]->size() < 2 || render_map_[layer]->back() == entity) return false;
+  std::list<Entity*>::iterator it = std::remove(render_map_[layer]->begin(), render_map_[layer]->end(), entity);
+  //std::find(render_map_[layer]->begin(), render_map_[layer]->end(), entity);
+  if (it == render_map_[layer]->end()) return false;
+  render_map_[layer]->push_back(entity);
+  return true;
+}
+
+bool World::SendToBack(Entity* entity) {
+  int layer = entity->GetLayer();
+  if (render_map_[layer]->size() < 2 || render_map_[layer]->front() == entity) return false;
+  std::list<Entity*>::reverse_iterator it = std::remove(render_map_[layer]->rbegin(), render_map_[layer]->rend(), entity);
+  //std::find(render_map_[layer]->begin(), render_map_[layer]->end(), entity);
+  if (it == render_map_[layer]->rend()) return false;
+  render_map_[layer]->push_front(entity);
+  return true;
 }

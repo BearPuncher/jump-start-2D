@@ -1,9 +1,10 @@
 #include <iostream>
 #include <stdio.h>
 
+#include "Box2D/Box2D.h"
+
 #include "globals.h"
 #include "engine.h"
-#include "Box2D/Box2D.h"
 #include "testworld.h"
 
 using namespace std;
