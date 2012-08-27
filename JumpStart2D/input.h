@@ -13,24 +13,28 @@ public:
   // Call this before any other methods
   void ReadInput();
   
-  inline bool* GetInput()
-  {
+  inline bool* GetInput() {
     return key_held_;
   };
   
-  inline bool KeyPressed(SDLKey key)
-  {
+  inline bool KeyPressed(SDLKey key) {
     return key_held_[key];
   };
   
-  inline bool WindowClosed()
-  {
+  inline bool WindowClosed() {
     return window_closed_;
   };
   
-  inline Point GetMousePosition()
-  {
+  inline Point GetMousePosition() {
     return Point(mouse_x_, mouse_y_);
+  };
+  
+  inline bool IsMaximised() {
+    return window_maximised_;
+  };
+  
+  inline bool HasFocus() {
+    return window_focused_;
   };
   
 private:
@@ -39,6 +43,10 @@ private:
   bool key_held_[323];
   //bool m_key_up[323];
   bool window_closed_;
+  
+  bool window_maximised_;
+  
+  bool window_focused_;
   
   int mouse_x_;
   int mouse_y_;

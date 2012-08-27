@@ -20,6 +20,8 @@ public:
   virtual void End();
   virtual void Update();
   virtual void Render();
+  virtual void FocusGained() {};
+  virtual void FocusLost() {};
   
   //Adds and Removes
   void UpdateLists();
@@ -80,6 +82,8 @@ public:
   inline bool IsVisible() {
     return visible_;
   };
+  
+  std::vector<Entity*>* GetAll(std::vector<Entity*>* into);
   
   bool BringForward(Entity* entity);
   bool SendBackward(Entity* entity);
@@ -277,13 +281,7 @@ private:
  focusLost	()	method	 
  public function focusLost():void
  Override this; called when game loses focus.
- 
- getAll	()	method	 
- public function getAll(into:Object):void
- Pushes all Entities in the World into the array.
- Parameters
- into:Object — The Array or Vector to populate.
- 
+
  getClass	()	method	 
  public function getClass(c:Class, into:Object):void
  Pushes all Entities in the World of the Class into the Array or Vector.

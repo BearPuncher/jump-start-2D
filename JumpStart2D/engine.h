@@ -62,6 +62,8 @@ private:
   bool UpdateTimer();
   void UpdateFPS();
   
+  void CheckFocusState();
+  
   Timer timer;
   Uint32 old_time_;
   Uint32 current_time_;
@@ -69,8 +71,6 @@ private:
   int fps_;
   double fps_count_;
   
-  
-protected:
   int bits_per_pixel_;
   bool full_screen_;
   std::string window_name_;
@@ -82,9 +82,11 @@ protected:
   bool paused_;
   bool debug_;
   
+  bool focus_state_;
+  
   GameStatusCode game_status_;
   
-  void CheckWorld();
+  protected:
 };
 
 #endif // GAME_H

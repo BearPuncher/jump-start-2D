@@ -178,6 +178,17 @@ void World::RemoveRender(Entity* entity) {
   }
 }
 
+std::vector<Entity*>* World::GetAll(std::vector<Entity*>* into) {
+  if (!update_list_.empty()) {
+    std::list<Entity*>::iterator it;
+    
+    for (it = update_list_.begin(); it != update_list_.end(); it++ ) {
+      into->push_back((*it));
+    }
+  }
+  return into;
+}
+
 bool World::BringForward(Entity* entity) {
   int layer = entity->GetLayer();
   if (render_map_[layer]->size() < 2) return false;

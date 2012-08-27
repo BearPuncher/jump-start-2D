@@ -4,7 +4,7 @@
 #include "Box2D/Box2D.h"
 
 #include "world.h"
-#include "testentity.h"
+#include "entity.h"
 #include "image.h"
 
 
@@ -79,6 +79,17 @@ public:
   void Render() {
     World::Render();
   };
+  
+  void FocusGained() {
+    World::FocusGained();
+    std::cerr << "Focused gained" << std::endl;
+  };
+  
+  void FocusLost() {
+    World::FocusLost();
+    std::cerr << "Focused lost" << std::endl;
+  };
+  
 private:
   Entity* e1;
   Entity* e2;

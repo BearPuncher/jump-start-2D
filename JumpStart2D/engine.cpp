@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "SDL/SDL_opengl.h"
 
 #include "globals.h"
@@ -28,6 +30,7 @@ Engine::Engine() : timer() {
   old_time_ = current_time_ = accumulator_ = fps_ = fps_count_ = 0;
   
   game_status_ = GAME_RUNNING;
+  focus_state_ = input.HasFocus();
 }
 
 Engine::Engine(int screen_width, int screen_height,
@@ -56,6 +59,7 @@ Engine::Engine(int screen_width, int screen_height,
    old_time_ = current_time_ = accumulator_ = fps_ = fps_count_ = 0;
   
   game_status_ = GAME_RUNNING;
+  focus_state_ = input.HasFocus();
 }
 
 Engine::~Engine() {
@@ -163,7 +167,7 @@ void Engine::Run() {
 
 void Engine::Update() {
   World* current_world = JS.GetWorld();
-  
+  CheckFocusState();
   if (current_world != NULL) {
     current_world->Update();
   }
@@ -266,6 +270,18 @@ void Engine::UpdateFPS() {
     fprintf(stderr, "%d\r", fps_);
     fps_ = 0;
     fps_count_ -= 1;
+  }
+}
+
+void Engine::CheckFocusState() {
+  if (focus_state_ != input.HasFocus()) {
+    focus_state_ = input.HasFocus();
+    World* world = JS.GetWorld();
+    if (focus_state_) {
+      world->FocusGained();
+    } else {
+      world->FocusLost();
+    }
   }
 }
 
