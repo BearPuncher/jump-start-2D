@@ -17,14 +17,23 @@ public:
   
   void Begin() {
     World::Begin();
+    Image* i1 = new Image("./assets/heart.png");
+    i1->CenterOrigin();
+    e1 = new Entity(Point(0,0), i1);
+    e1->SetLayer(0);
+    e1->SetHitbox(160, 140);
+    e1->CenterOrigin();
     
-    e1 = new Entity(Point(0,0), new Image("./assets/heart.png"));
     Add(e1);
     
-    e2 = new Entity(Point(100,40), new Image("./assets/heart.png"));
+    e2 = new Entity(Point(140,140), new Image("./assets/heart.png"));
+    e2->SetLayer(1);
+    e2->SetHitbox(160, 140);
     Add(e2);
     
-    e3 = new Entity(Point(40,100), new Image("./assets/heart.png"));
+    e3 = new Entity(Point(260,260), new Image("./assets/heart.png"));
+    e3->SetLayer(2);
+    //e2->SetHitbox(60, 60);
     Add(e3);
     
     /*
@@ -62,7 +71,7 @@ public:
   
   void Update() {
     World::Update();
-    
+    //std::cerr << GetLayerCount() << std::endl;
     /*world->Step(JS.GetElapsedTime(), 2, 6);
     
     // Now print the position and angle of the body.
@@ -71,8 +80,9 @@ public:
     
     
     printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);*/
+    
     if (input.KeyPressed(SDLK_SPACE)) {
-      std::cerr << (bool)BringToFront(e1) << std::endl; 
+      RemoveAll();
     }
   };
   

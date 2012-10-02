@@ -20,6 +20,7 @@ public:
   virtual void End();
   virtual void Update();
   virtual void Render();
+  virtual void DebugRender();
   virtual void FocusGained() {};
   virtual void FocusLost() {};
   
@@ -76,7 +77,11 @@ public:
   };
   
   inline int GetCount() {
-    return count_;
+    return update_list_.size();
+  };
+  
+  inline int GetLayerCount() {
+    return render_map_.size();
   };
   
   inline bool IsVisible() {
@@ -106,11 +111,9 @@ protected:
   //A map of layers to lists of enities
   std::map< int, EntityList*> render_map_;
   
-  int count_;
   bool visible_;
   
 private:
-  int layer_count_;
 };
 
 //Map or priority queue
@@ -127,19 +130,7 @@ private:
  first:Entity  [read-only]
  The first Entity in the World.
  public function get first():Entity 
- 
- layerFarthest	property	 
- layerFarthest:int  [read-only]
- The layer that will be rendered first by the World.
- public function get layerFarthest():int
- 
- layerNearest	property	 
- layerNearest:int  [read-only]
- The layer that will be rendered last by the World.
- public function get layerNearest():int 
- public function get nearest():Entity  
- 
- 
+  
  uniqueTypes	property	 
  uniqueTypes:uint  [read-only]
  How many different types have been added to the World.
@@ -274,14 +265,6 @@ private:
  Returns
  Entity — The new Entity object.
 
- focusGained	()	method	 
- public function focusGained():void
- Override this; called when game gains focus.
- 
- focusLost	()	method	 
- public function focusLost():void
- Override this; called when game loses focus.
-
  getClass	()	method	 
  public function getClass(c:Class, into:Object):void
  Pushes all Entities in the World of the Class into the Array or Vector.
@@ -369,24 +352,11 @@ private:
  Returns
  Entity — The recycled Entity.
  
- removeAll	()	method	 
- public function removeAll():void
- Removes all Entities from the World at the end of the frame.
- 
  removeList	()	method	 
  public function removeList(... list):void
  Removes multiple Entities from the world.
  Parameters
  ... list — Several Entities (as arguments) or an Array/Vector of Entities.
-
- 
- sendToBack	()	method	 
- public function sendToBack(e:Entity):Boolean
- Sends the Entity to the back of its contained layer.
- Parameters
- e:Entity — The Entity to shift.
- Returns
- Boolean — If the Entity changed position.
  
  typeCount	()	method	 
  public function typeCount(type:String):uint
@@ -399,7 +369,6 @@ private:
  typeFirst	()	method	 
  public function typeFirst(type:String):Entity
  The first Entity of the type.
- 
  Parameters
  type:String — The type to check.
  Returns

@@ -1,3 +1,4 @@
+#include "SDL/SDL_opengl.h"
 #include "entity.h"
 #include "globals.h"
 #include "world.h"
@@ -5,22 +6,26 @@
 
 using namespace draw;
 
-Entity::Entity() {
+Entity::Entity() : hitbox_(Point(0,0), 0, 0) {
   position_.x = 0;
   position_.y = 0;
+  
+  graphic_ = NULL;
   
   layer_ = 0;
   
   visible_ = true;
   
-  graphic_ = NULL;
   world_ = NULL;
   
   collision_type_ = "";
+  
+  mask_ = NULL;
 }
 
-Entity::Entity(Point position, Graphic* graphic) {
+Entity::Entity(Point position, Graphic* graphic, geometry::Shape* mask) : hitbox_(Point(0,0), 0, 0) {
   position_ = position;
+  
   graphic_ = graphic;
   
   layer_ = 0;
@@ -30,6 +35,8 @@ Entity::Entity(Point position, Graphic* graphic) {
   world_ = NULL;
   
   collision_type_ = "";
+  
+  mask_ = mask;
 }
 
 Entity::~Entity() {
@@ -56,6 +63,37 @@ void Entity::Render() {
     
     graphic_->Render(point, camera);
   }
+}
+
+void Entity::DebugRender() {
+
+  int px = position_.x - hitbox_.p.x;
+  int py = position_.y - hitbox_.p.y;
+  
+  
+  glColor3f(0.0f, 0.0f, 0.0f);
+  glBegin(GL_LINE_LOOP);
+    glVertex2f(px, py);
+    glVertex2f(px + hitbox_.w, py);
+    glVertex2f(px + hitbox_.w, py + hitbox_.h);
+    glVertex2f(px, py + hitbox_.h);
+  glEnd();
+}
+
+void Entity::SetHitbox(int width, int height, int origin_x, int origin_y) {
+  hitbox_.w = width;
+  hitbox_.h = height;
+  hitbox_.p.x = origin_x;
+  hitbox_.p.y = origin_y;
+}
+
+void Entity::SetHitbox(geometry::Rectangle hitbox) {
+  hitbox_ = hitbox;
+}
+
+void Entity::SetHitboxToImage() {
+  if (graphic_ == NULL) return;
+
 }
 
 void Entity::SetLayer(int layer) {

@@ -15,7 +15,7 @@ JumpStartController::JumpStartController() {
   
   //Default to 60
   expected_frame_rate_ = 60;
-  elapsed = 0;
+  elapsed_ = 0;
 }
 
 void JumpStartController::SetCameraOrigin() {

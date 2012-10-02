@@ -188,6 +188,7 @@ void Engine::Render() {
   if (current_world != NULL) {
     if (current_world->IsVisible()) {
       current_world->Render();
+      if (debug_) current_world->DebugRender();
     }
   } else {
     //Render static camera if no world exists

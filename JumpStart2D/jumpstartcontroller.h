@@ -60,15 +60,15 @@ public:
   };
   
   inline double GetElapsedTime() {
-    return elapsed;
+    return elapsed_;
   };
 
-  inline void SetElapsedTime(double elapsed_) {
-    elapsed = elapsed_;
+  inline void SetElapsedTime(double elapsed) {
+    elapsed_ = elapsed;
   };
   
   inline double Timedt() {
-    return (double)expected_frame_rate_ * elapsed;
+    return (double)expected_frame_rate_ * elapsed_;
   };
   
   inline void SetFrameRate(int frame_rate) {
@@ -86,7 +86,7 @@ private:
   geometry::Rectangle* bounds_;
   
   int expected_frame_rate_;
-  double elapsed;
+  double elapsed_;
 };
 
 
