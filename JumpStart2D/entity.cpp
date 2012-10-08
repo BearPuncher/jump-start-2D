@@ -9,33 +9,33 @@ using namespace draw;
 Entity::Entity() : hitbox_(Point(0,0), 0, 0) {
   position_.x = 0;
   position_.y = 0;
-  
+
   graphic_ = NULL;
-  
+
   layer_ = 0;
-  
+
   visible_ = true;
-  
+
   world_ = NULL;
-  
+
   collision_type_ = "";
-  
+
   mask_ = NULL;
 }
 
 Entity::Entity(Point position, Graphic* graphic, geometry::Shape* mask) : hitbox_(Point(0,0), 0, 0) {
   position_ = position;
-  
+
   graphic_ = graphic;
-  
+
   layer_ = 0;
-  
+
   visible_ = true;
-  
+
   world_ = NULL;
-  
+
   collision_type_ = "";
-  
+
   mask_ = mask;
 }
 
@@ -52,15 +52,15 @@ void Entity::Update() {}
 void Entity::Render() {
   if (graphic_ != NULL && graphic_->IsVisible()) {
     Point point;
-    
+
     if (graphic_->IsRelative()) {
       point = position_;
     } else {
       point.x = point.y = 0;
     }
-    
+
     Camera camera = JS.GetWorld() != NULL ? JS.GetWorld()->GetCamera() : JS.GetCamera();
-    
+
     graphic_->Render(point, camera);
   }
 }
@@ -69,8 +69,8 @@ void Entity::DebugRender() {
 
   int px = position_.x - hitbox_.p.x;
   int py = position_.y - hitbox_.p.y;
-  
-  
+
+
   glColor3f(0.0f, 0.0f, 0.0f);
   glBegin(GL_LINE_LOOP);
     glVertex2f(px, py);
@@ -87,7 +87,7 @@ void Entity::SetHitbox(int width, int height, int origin_x, int origin_y) {
   hitbox_.p.y = origin_y;
 }
 
-void Entity::SetHitbox(geometry::Rectangle hitbox) {
+void Entity::SetHitbox(geometry::Rect hitbox) {
   hitbox_ = hitbox;
 }
 
@@ -102,7 +102,7 @@ void Entity::SetLayer(int layer) {
     layer_ = layer;
     return;
   }
-  
+
   world_->RemoveRender(this);
   layer_ = layer;
   world_->AddRender(this);

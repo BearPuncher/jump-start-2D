@@ -1,6 +1,6 @@
 #include "image.h"
 
-Image Image::CreateRectangle(int width, int height, Uint32 colour, float alpha) {
+Image Image::CreateRect(int width, int height, Uint32 colour, float alpha) {
 
   SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, RMASK, GMASK, BMASK, AMASK );
   SDL_Rect rect = {0, 0, width, height};
@@ -95,12 +95,12 @@ Image::Image(SDL_Surface* image_surface, SDL_Rect* clip_rect):Graphic() {
 
   origin_x_ = 0;
   origin_y_ = 0;
-  
+
   visible_ = true;
 }
 
 void Image::Render(Point point, Camera camera) {
-  
+
   //If not visible, dont render
   if (!visible_) {
     return;
@@ -217,7 +217,8 @@ void Image::ApplyBlendFunction() {
       glBlendFunc(GL_SRC_COLOR, GL_DST_COLOR);
       break;
     case NORMAL:
-      glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+      //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       break;
     case OVERLAY:
       break;
@@ -271,7 +272,7 @@ GLuint Image::CreateOpenGLTexture(SDL_Surface* image_surface) {
   // Edit the texture object's image data using the information SDL_Surface gives us
   glTexImage2D( GL_TEXTURE_2D, 0, number_of_pixels, image_surface->w,
                image_surface->h, 0, texture_format,
-               GL_UNSIGNED_INT_8_8_8_8, image_surface->pixels);
+               TEXTURE_TYPE, image_surface->pixels);
   //GL_UNSIGNED_BYTE, image_surface_->pixels );
   return texture;
 }

@@ -34,7 +34,7 @@ public:
     SUBTRACT
   };
 
-  static Image CreateRectangle(int width, int height, Uint32 colour = 0xFFFFFF, float alpha = 1);
+  static Image CreateRect(int width, int height, Uint32 colour = 0xFFFFFF, float alpha = 1);
   static Image CreateCircle(int radius, Uint32 colour = 0xFFFFFF, float alpha = 1);
 
   Image();
@@ -65,7 +65,7 @@ public:
     blend_mode_ = blend_mode;
   };
 
-  inline void SetClippingRectangle(Point p, int w, int h) {
+  inline void SetClippingRect(Point p, int w, int h) {
     clip_rect_ = new SDL_Rect;
     clip_rect_->x = p.x;
     clip_rect_->y = p.x;
