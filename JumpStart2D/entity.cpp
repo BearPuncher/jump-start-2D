@@ -47,7 +47,11 @@ void Entity::Added() {}
 
 void Entity::Removed() {}
 
-void Entity::Update() {}
+void Entity::Update() {
+  if (graphic_ != NULL) {
+     graphic_->Update();
+  }
+}
 
 void Entity::Render() {
   if (graphic_ != NULL && graphic_->IsVisible()) {

@@ -43,15 +43,15 @@ Spritemap::Spritemap(const char * filename, int frame_width, int frame_height):I
 }
 
 void Spritemap::Update() {
-  //Image::Update(dt);
+  //Must fix to run of elapsed time
   float dt = 0.02;
   if (current_animation_ != NULL && !complete_) {
     timer_ += current_animation_->frame_rate * dt * rate_;
+	
     if (timer_ >= 1.0f) {
       while (timer_ >= 1.0f) {
         --timer_;
         ++index_;
-        
 
         if (index_ == current_animation_->frame_count) {
           if (current_animation_->loop) {
@@ -77,7 +77,7 @@ void Spritemap::Add(const char* name, int frames[], int frame_count, float frame
 }
 
 void Spritemap::Play(const char* name, bool reset, int frame) {
-  //Mus test this change
+  //Must test this change
   if (!reset && current_animation_ && current_animation_->name.compare(name) == 0) {
     return; 
   }
