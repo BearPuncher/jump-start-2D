@@ -76,11 +76,13 @@ Image::Image(const char* filename, SDL_Rect* clip_rect):Graphic() {
 
   origin_x_ = 0;
   origin_y_ = 0;
+
+  bound_texture_ = CreateOpenGLTexture(image_surface_);
 }
 
 Image::Image(SDL_Surface* image_surface, SDL_Rect* clip_rect):Graphic() {
   LoadSurface(image_surface);
-
+  
   alpha_ = 1; // value 0 to 1
   angle_ = 0;
 
@@ -97,6 +99,8 @@ Image::Image(SDL_Surface* image_surface, SDL_Rect* clip_rect):Graphic() {
   origin_y_ = 0;
 
   visible_ = true;
+
+  bound_texture_ = CreateOpenGLTexture(image_surface_);
 }
 
 void Image::Render(Point point, Camera camera) {
@@ -105,8 +109,6 @@ void Image::Render(Point point, Camera camera) {
   if (!visible_) {
     return;
   }
-
-  GLuint texture = CreateOpenGLTexture(image_surface_);
 
   glPushMatrix();
 
@@ -136,7 +138,7 @@ void Image::Render(Point point, Camera camera) {
   //Needs to be called before mapping a texture
   glEnable(GL_TEXTURE_2D);
   // Bind the texture to which subsequent calls refer to
-  glBindTexture( GL_TEXTURE_2D, texture );
+  glBindTexture( GL_TEXTURE_2D, bound_texture_ );
 
   DrawTexture(point);
 

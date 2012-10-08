@@ -2,6 +2,7 @@
 #define JS_GRAPHIC_H
 
 #include "SDL/SDL_image.h"
+#include "SDL/SDL_opengl.h"
 #include "geometry.h"
 #include "draw.h"
 
@@ -73,7 +74,7 @@ protected:
   double scale_y_;
 
   SDL_Surface* image_surface_; 	// This surface will tell us the details of the image
-
+  GLuint bound_texture_;
 
 private:
 };

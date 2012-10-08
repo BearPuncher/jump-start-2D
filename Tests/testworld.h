@@ -18,6 +18,7 @@ public:
   void Begin() {
     World::Begin();
     Image* i1 = new Image("./assets/heart.png");
+
     i1->CenterOrigin();
     e1 = new Entity(Point(0,0), i1);
     e1->SetLayer(0);
@@ -25,16 +26,16 @@ public:
     e1->CenterOrigin();
     
     Add(e1);
-    
-    e2 = new Entity(Point(140,140), new Image("./assets/heart.png"));
+    /*
+    e2 = new Entity(Point(140,140), new Image("heart.png"));
     e2->SetLayer(1);
     e2->SetHitbox(160, 140);
     Add(e2);
     
-    e3 = new Entity(Point(260,260), new Image("./assets/heart.png"));
+    e3 = new Entity(Point(260,260), new Image("heart.png"));
     e3->SetLayer(2);
     //e2->SetHitbox(60, 60);
-    Add(e3);
+    Add(e3);*/
     
     /*
     b2Vec2 gravity(0.0f, -10.0f);
@@ -78,9 +79,12 @@ public:
     b2Vec2 position = body->GetPosition();
     float32 angle = body->GetAngle();
     
+	
     
     printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);*/
     
+	e1->SetOrigin(input.GetMousePosition());
+
     if (input.KeyPressed(SDLK_SPACE)) {
       RemoveAll();
     }

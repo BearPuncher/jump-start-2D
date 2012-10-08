@@ -23,7 +23,12 @@ void Graphic::LoadSurface( const char * filename) {
   SDL_Surface* surface_return = NULL;
 
   if((surface_temp = IMG_Load(filename)) == NULL) {
-    fprintf(stderr, "Image %s not found.\n", filename);
+	const char *message = IMG_GetError();
+	if(!message) {
+      message = "Unable to determine SDL_Image error";
+    }
+    
+	fprintf(stderr, "Image Error: %s\n", message);
     exit(-1);
   }
 

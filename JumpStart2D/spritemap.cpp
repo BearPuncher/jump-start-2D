@@ -30,8 +30,8 @@ Spritemap::Spritemap(const char * filename, int frame_width, int frame_height):I
   animation_map_ = std::map< std::string, Animation* >();
   current_animation_ = NULL;
   
-  columns_ = floor(image_surface_->w/frame_width_);
-  rows_ = floor(image_surface_->h/frame_height_);
+  columns_ = (int)floor((float)image_surface_->w/frame_width_);
+  rows_ = (int)floor((float)image_surface_->h/frame_height_);
   
   frame_count_ = columns_ * rows_;
   complete_ = false;
