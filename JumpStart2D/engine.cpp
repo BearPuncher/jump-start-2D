@@ -96,6 +96,10 @@ bool Engine::Init() {
     sdl_flags_ |= SDL_SWSURFACE;
   }
 
+  SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 8 );
+  SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 8 );
+  SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 8 );
+
   bits_per_pixel_ = info->vfmt->BitsPerPixel;
 
   SDL_WM_SetCaption(window_name_.c_str(), NULL);
