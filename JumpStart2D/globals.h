@@ -21,11 +21,7 @@
   #define GMASK 0x0000ff00
   #define BMASK 0x00ff0000
   #define AMASK 0xff000000
-<<<<<<< HEAD
-  #define TEXTURE_TYPE GL_UNSIGNED_INT_8_8_8_8_REV
-=======
   #define TEXTURE_TYPE GL_UNSIGNED_INT_8_8_8_8
->>>>>>> Tried something to work for both mac + pc
 #endif
 
 #endif // JS_GLOBALS_H
