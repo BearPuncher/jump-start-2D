@@ -74,7 +74,6 @@ void Entity::DebugRender() {
   int px = position_.x - hitbox_.p.x;
   int py = position_.y - hitbox_.p.y;
 
-
   glColor3f(0.0f, 0.0f, 0.0f);
   glBegin(GL_LINE_LOOP);
     glVertex2f(px, py);
