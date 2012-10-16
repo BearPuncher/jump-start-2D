@@ -1,4 +1,5 @@
 #include "image.h"
+#include <iostream>
 
 Image Image::CreateRect(int width, int height, Uint32 colour, float alpha) {
 
@@ -134,7 +135,9 @@ void Image::Render(Point point, Camera camera) {
 
   //No tint
   glColor4f(HEX3_TO_FLOAT(colour_), alpha_);
-
+  
+  glEnable(GL_ALPHA_TEST);
+  glAlphaFunc(GL_GREATER, 0);
   //Needs to be called before mapping a texture
   glEnable(GL_TEXTURE_2D);
   // Bind the texture to which subsequent calls refer to
@@ -245,6 +248,7 @@ GLuint Image::CreateOpenGLTexture(SDL_Surface* image_surface) {
 
   // get the number of channels in the SDL surface
   number_of_pixels = image_surface->format->BytesPerPixel;
+  
   if (number_of_pixels == 4) {// contains an alpha channel
     if (image_surface->format->Rmask == 0x000000ff) {
       texture_format = GL_RGBA;
@@ -262,11 +266,12 @@ GLuint Image::CreateOpenGLTexture(SDL_Surface* image_surface) {
     exit(-1);
   }
 
+  glPixelStorei(GL_UNPACK_ALIGNMENT, number_of_pixels);
   glGenTextures( 1, &texture );
 
   // Bind the texture object
   glBindTexture( GL_TEXTURE_2D, texture );
-
+  
   // Set the texture's stretching properties
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
   glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
@@ -274,7 +279,7 @@ GLuint Image::CreateOpenGLTexture(SDL_Surface* image_surface) {
   // Edit the texture object's image data using the information SDL_Surface gives us
   glTexImage2D( GL_TEXTURE_2D, 0, number_of_pixels, image_surface->w,
                image_surface->h, 0, texture_format,
-               TEXTURE_TYPE, image_surface->pixels);
+               GL_UNSIGNED_BYTE, image_surface->pixels);
   //GL_UNSIGNED_BYTE, image_surface_->pixels );
   return texture;
 }

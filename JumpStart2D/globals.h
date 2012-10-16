@@ -15,13 +15,11 @@
   #define GMASK 0x00ff0000
   #define BMASK 0x0000ff00
   #define AMASK 0x000000ff
-  #define TEXTURE_TYPE GL_UNSIGNED_INT_8_8_8_8_REV
 #else
   #define RMASK 0x000000ff
   #define GMASK 0x0000ff00
   #define BMASK 0x00ff0000
   #define AMASK 0xff000000
-  #define TEXTURE_TYPE GL_UNSIGNED_INT_8_8_8_8
 #endif
 
 #endif // JS_GLOBALS_H
