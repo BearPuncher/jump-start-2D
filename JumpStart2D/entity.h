@@ -9,37 +9,98 @@ class Graphic;
 
 class Entity {
 public:
+  /**
+   * Constructor.
+   */
   Entity();
+  
+  /**
+   * Constructor.
+   * @param	position  Starting position of the entity
+   * @param	graphic   Pointer to a graphic
+   * @param	mask      The image mask, hides certain parts of image
+   */
   Entity(geometry::Point position, Graphic* graphic = NULL, geometry::Shape* mask = NULL);
+  
+  /**
+   * Deconstructor.
+   */
   virtual ~Entity();
 
   //Overridable functions
+  /**
+   * Called upon the entity being added to a world
+   */
   virtual void Added();
+  
+  /**
+   * Called upon the entity being removed to a world
+   */
   virtual void Removed();
+  
+  /**
+   * Called every update cycle
+   */
   virtual void Update();
+  
+  /**
+   * Called every render step
+   */
   virtual void Render();
 
+  /**
+   * Draws hitbox of the entity
+   */
   void DebugRender();
-
+  
+  /**
+   * Called upon the entity being added to a world
+   * @return The pointer to the entity's graphic
+   */
   inline Graphic* GetGraphic() {
     return graphic_;
   };
 
+  /**
+   * Sets the origin of the hitbox to center of the hitbox
+   */
   inline void CenterOrigin() {
     hitbox_.p.x = hitbox_.w / 2;
     hitbox_.p.y = hitbox_.h / 2;
   };
 
+  /**
+   * Sets the entity's origin to given point
+   * @param position  The point to be the new hitbox origin
+   */
   inline void SetOrigin(geometry::Point position) {
     position_ = position;
   };
 
+  /**
+   * Returns the current point of origin
+   */
   inline geometry::Point GetOrigin() {
     return position_;
   };
 
-  void SetHitbox(int width = 0, int height = 0, int origin_x = 0, int origin_y = 0);
+  /**
+   * Sets the entity's hitbox to given dimensions
+   * @param width   width of the hitbox
+   * @param height  height of the hitbox
+   * @param origin  origin of the hitbox
+   */
+  void SetHitbox(int width = 0, int height = 0, geometry::Point origin = geometry::origin);
+  
+  /**
+   * Sets the entity's hitbox to given rectange
+   * @param hitbox   given hitbox to clone
+   */
   void SetHitbox(geometry::Rect hitbox);
+  
+  /**
+   * Sets the entity's hitbox the dimensions current graphic
+   */
   void SetHitboxToImage();
 
 

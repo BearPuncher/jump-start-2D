@@ -48,6 +48,10 @@ public:
   
   //Set window name to string "name"
   void SetWindowName(const char*);
+  inline void SetDebug(bool debug) {
+    debug_ = debug;
+  };
+  
   //
   void ResizeWindow(int width, int height);
   //Easily toggle between full screen

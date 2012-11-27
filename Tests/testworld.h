@@ -24,7 +24,6 @@ public:
     e1->SetLayer(0);
     e1->SetHitbox(160, 140);
     e1->CenterOrigin();
-    
     Add(e1);
     /*
     e2 = new Entity(Point(140,140), new Image("heart.png"));
@@ -79,11 +78,9 @@ public:
     b2Vec2 position = body->GetPosition();
     float32 angle = body->GetAngle();
     
-	
-    
     printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);*/
     
-	e1->SetOrigin(input.GetMousePosition());
+    e1->SetOrigin(input.GetMousePosition());
 
     if (input.KeyPressed(SDLK_SPACE)) {
       RemoveAll();

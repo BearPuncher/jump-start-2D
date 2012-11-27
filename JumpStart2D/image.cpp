@@ -136,8 +136,8 @@ void Image::Render(Point point, Camera camera) {
   //No tint
   glColor4f(HEX3_TO_FLOAT(colour_), alpha_);
   
-  glEnable(GL_ALPHA_TEST);
-  glAlphaFunc(GL_GREATER, 0);
+  //glEnable(GL_ALPHA_TEST);
+  //glAlphaFunc(GL_GREATER, 0);
   //Needs to be called before mapping a texture
   glEnable(GL_TEXTURE_2D);
   // Bind the texture to which subsequent calls refer to
@@ -223,7 +223,7 @@ void Image::ApplyBlendFunction() {
       break;
     case NORMAL:
       //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
-      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
       break;
     case OVERLAY:
       break;

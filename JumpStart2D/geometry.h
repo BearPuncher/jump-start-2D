@@ -7,16 +7,25 @@
 
 namespace geometry {
 
-  //Definition of PI
+  /**
+   * Definition of PI
+   */
 	const double PI = 3.14159265;
 
-  //Point definition
+  /**
+   * Definition of a Point (x,y)
+   */
 	struct Point {
 		double	x;
 		double	y;
 		Point(int _x = 0, int _y = 0) : x(_x), y(_y) {}
 	};
 
+  /**
+   * Definition of the origin
+   */
+  const Point origin = Point(0,0);
+  
   //Change to just rect
   struct Rect {
     Point p;

@@ -4,8 +4,6 @@
 #include "world.h"
 #include "graphic.h"
 
-using namespace draw;
-
 Entity::Entity() : hitbox_(Point(0,0), 0, 0) {
   position_.x = 0;
   position_.y = 0;
@@ -63,7 +61,7 @@ void Entity::Render() {
       point.x = point.y = 0;
     }
 
-    Camera camera = JS.GetWorld() != NULL ? JS.GetWorld()->GetCamera() : JS.GetCamera();
+    draw::Camera camera = JS.GetWorld() != NULL ? JS.GetWorld()->GetCamera() : JS.GetCamera();
 
     graphic_->Render(point, camera);
   }
@@ -73,7 +71,7 @@ void Entity::DebugRender() {
 
   int px = position_.x - hitbox_.p.x;
   int py = position_.y - hitbox_.p.y;
-
+  
   glColor3f(0.0f, 0.0f, 0.0f);
   glBegin(GL_LINE_LOOP);
     glVertex2f(px, py);
@@ -83,11 +81,11 @@ void Entity::DebugRender() {
   glEnd();
 }
 
-void Entity::SetHitbox(int width, int height, int origin_x, int origin_y) {
+void Entity::SetHitbox(int width, int height, geometry::Point origin) {
   hitbox_.w = width;
   hitbox_.h = height;
-  hitbox_.p.x = origin_x;
-  hitbox_.p.y = origin_y;
+  hitbox_.p.x = origin.x;
+  hitbox_.p.y = origin.y;
 }
 
 void Entity::SetHitbox(geometry::Rect hitbox) {
@@ -96,7 +94,7 @@ void Entity::SetHitbox(geometry::Rect hitbox) {
 
 void Entity::SetHitboxToImage() {
   if (graphic_ == NULL) return;
-
+  
 }
 
 void Entity::SetLayer(int layer) {

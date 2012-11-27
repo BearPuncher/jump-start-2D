@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   /* Initialise game */
   Engine engine(800, 640, "My Tests", false, 60, false);
   engine.Init();
-  
+  engine.SetDebug(true);
   JS.SetWorld(new TestWorld());
 
   /* Start game loop */

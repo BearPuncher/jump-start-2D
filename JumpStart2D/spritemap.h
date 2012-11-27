@@ -20,9 +20,8 @@ public:
   
   void GetColumns();
   void GetRows();
-  void SetFrame(int column, int row);
   
-
+  void SetFrame(int column, int row);
   int GetFrame(int column, int row) {
     return (row % rows_) * columns_ + (column % columns_);
   }

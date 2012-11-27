@@ -20,7 +20,7 @@ Engine::Engine() : timer() {
   fixed_frame_rate_ = false;
 
   paused_ = false;
-  debug_ = true;
+  debug_ = false;
 
   sdl_surface_ = NULL;
   sdl_flags_ = 0;
@@ -49,7 +49,7 @@ Engine::Engine(int screen_width, int screen_height,
   fixed_frame_rate_ = fixed_frame_rate;
 
   paused_ = false;
-  debug_ = true;
+  debug_ = false;
 
   sdl_surface_ = NULL;
   sdl_flags_ = 0;
